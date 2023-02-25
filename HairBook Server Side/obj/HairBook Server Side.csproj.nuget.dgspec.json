@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\HairBook Server Side.csproj": {}
+    "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\HairBook Server Side.csproj": {
+    "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\HairBook Server Side.csproj",
+        "projectUniqueName": "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj",
         "projectName": "HairBook Server Side",
-        "projectPath": "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\HairBook Server Side.csproj",
+        "projectPath": "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj",
         "packagesPath": "C:\\Users\\dorha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\obj\\",
+        "outputPath": "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dorha\\AppData\\Roaming\\NuGet\\NuGet.Config",

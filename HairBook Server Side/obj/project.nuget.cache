@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IKcW35Owpf0Go7R1sl4PNZ2BIY+jeWp82Jcq0LN3Nc2ohc5HFPas4SJou7NgObADYygihrsTwIJMZgU3Xr2XPA==",
+  "dgSpecHash": "Q15Zf4Xxo5aeq+ODnUVvdy4TehjRPof/peac70PoABvIr9aZ4Xoyz0KelpvUpfJpS3X7Bj4PII5jj3umQDVejA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\dorha\\OneDrive\\שולחן העבודה\\עדן\\פרוייקט גמר\\HairBook Server Side\\HairBook Server Side\\HairBook Server Side.csproj",
+  "projectFilePath": "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
