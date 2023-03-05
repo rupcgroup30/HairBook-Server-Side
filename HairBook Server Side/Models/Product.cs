@@ -1,18 +1,27 @@
 ﻿using HairBook_Server_Side.Models.DAL;
+using Microsoft.AspNetCore.Identity;
 
 namespace HairBook_Server_Side.Models
 {
     public class Product
     {
+        private int productNum;
         private string productName;
         private string description;
         private double price;
         private string seriesName;
+        private string careKind;
+        private int amount;
+        private string image;
 
         public string ProductName { get => productName; set => productName = value; }
         public string Description { get => description; set => description = value; }
         public double Price { get => price; set => price = value; }
         public string SeriesName { get => seriesName; set => seriesName = value; }
+        public string CareKind { get => careKind; set => careKind = value; }
+        public int Amount { get => amount; set => amount = value; }
+        public int ProductNum { get => productNum; set => productNum = value; }
+        public string Image { get => image; set => image = value; }
 
         public int Insert()
         {
@@ -24,6 +33,15 @@ namespace HairBook_Server_Side.Models
         {
             DBServices dbs = new DBServices();
             return dbs.ReadProducts();
+        }
+
+        public int UpdateNOrder(int id,int phoneNum, int amount, string date)
+        {
+            DBServices dbs = new DBServices();
+            if (dbs.UpdateProduct(id, amount) != 0)
+                return dbs.OrderProduct(id, phoneNum, date);
+            else 
+                return 0;
         }
     }
 }

@@ -6,9 +6,9 @@ namespace HairBook_Server_Side.Models
     {
 
         private string birthDate;
-        private bool gender;
+        private string gender;
         public string BirthDate { get => birthDate; set => birthDate = value; }
-        public bool Gender { get => gender; set => gender = value; }
+        public string Gender { get => gender; set => gender = value; }
 
         public int Insert()
         {

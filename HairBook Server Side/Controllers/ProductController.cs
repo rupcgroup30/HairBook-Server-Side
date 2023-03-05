@@ -32,9 +32,11 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public int Put(int id, int phoneNum, int amount, string date)
         {
+            Product product = new Product();
+            return product.UpdateNOrder(id, phoneNum, amount, date);
         }
 
         // DELETE api/<ProductController>/5

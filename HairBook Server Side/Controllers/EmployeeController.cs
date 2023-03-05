@@ -11,17 +11,17 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<EmployeeController>
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<EmployeeController>/5
-        [HttpGet("{phoneNumPassword}")]
         public Employee Get(string phoneNum, string password)
         {
             Employee emp = new Employee();
-            return emp.Read(phoneNum,password);
+            return emp.Read(phoneNum, password);
+        }
+
+        // GET api/<EmployeeController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
         }
 
         // POST api/<EmployeeController>

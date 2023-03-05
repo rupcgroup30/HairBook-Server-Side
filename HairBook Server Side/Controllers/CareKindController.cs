@@ -7,13 +7,14 @@ namespace HairBook_Server_Side.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TreatmentController : ControllerBase
+    public class CareKindController : ControllerBase
     {
         // GET: api/<Treatment>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<CareKind> Get()
         {
-            return new string[] { "value1", "value2" };
+            CareKind careKind=new CareKind();
+            return careKind.Read();
         }
 
         // GET api/<Treatment>/5
@@ -25,7 +26,7 @@ namespace HairBook_Server_Side.Controllers
 
         // POST api/<Treatment>
         [HttpPost]
-        public int Post([FromBody] Treatment treatment)
+        public int Post([FromBody] CareKind treatment)
         {
             return treatment.Insert();
         }
