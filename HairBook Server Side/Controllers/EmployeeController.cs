@@ -18,10 +18,11 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // GET api/<EmployeeController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{service}")]
+        public List<object> GetByService(int service)
         {
-            return "value";
+            Employee emp = new Employee();
+            return emp.ReadByService(service);
         }
 
         // POST api/<EmployeeController>

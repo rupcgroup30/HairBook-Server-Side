@@ -5,9 +5,9 @@ namespace HairBook_Server_Side.Models
     public class Client : User
     {
 
-        private string birthDate;
+        private DateTime birthDate;
         private string gender;
-        public string BirthDate { get => birthDate; set => birthDate = value; }
+        public DateTime BirthDate { get => birthDate; set => birthDate = value; }
         public string Gender { get => gender; set => gender = value; }
 
         public int Insert()

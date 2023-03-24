@@ -1,4 +1,5 @@
 ﻿using HairBook_Server_Side.Models.DAL;
+using Microsoft.VisualBasic;
 
 namespace HairBook_Server_Side.Models
 {
@@ -7,11 +8,11 @@ namespace HairBook_Server_Side.Models
         private int employeeNum;
         private String password;
         private String empolyeeType;
-        private String startDate;
+        private DateTime startDate;
         public int EmployeeNum { get => employeeNum; set => employeeNum = value; }
         public string Password { get => password; set => password = value; }
         public string EmpolyeeType { get => empolyeeType; set => empolyeeType = value; }
-        public string StartDate { get => startDate; set => startDate = value; }
+        public DateTime StartDate { get => startDate; set => startDate = value; }
 
         public int Insert()
         {
@@ -23,6 +24,12 @@ namespace HairBook_Server_Side.Models
         {
             DBServices dbs = new DBServices();
             return dbs.ReadEmployee(phoneNum,password);
+        }
+
+        public List<object> ReadByService(int service)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadByService(service);
         }
     }
 }

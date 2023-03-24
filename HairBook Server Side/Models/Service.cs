@@ -2,7 +2,7 @@
 
 namespace HairBook_Server_Side.Models
 {
-    public class CareKind
+    public class Service
     {
         private int treatmentNum;
         private string treatmentType;
@@ -30,13 +30,13 @@ namespace HairBook_Server_Side.Models
         public int Insert()
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertCareKind(this);
+            return dbs.InsertService(this);
         }
 
-        public List<CareKind> Read()
+        public List<Service> Read()
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadCareKind();
+            return dbs.ReadService();
         }
     }
 }

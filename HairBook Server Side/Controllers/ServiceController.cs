@@ -7,37 +7,37 @@ namespace HairBook_Server_Side.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CareKindController : ControllerBase
+    public class ServiceController : ControllerBase
     {
-        // GET: api/<Treatment>
+        // GET: api/<Service>
         [HttpGet]
-        public List<CareKind> Get()
+        public List<Service> Get()
         {
-            CareKind careKind=new CareKind();
-            return careKind.Read();
+            Service service=new Service();
+            return service.Read();
         }
 
-        // GET api/<Treatment>/5
+        // GET api/<Service>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/<Treatment>
+        // POST api/<Service>
         [HttpPost]
-        public int Post([FromBody] CareKind treatment)
+        public int Post([FromBody] Service service)
         {
-            return treatment.Insert();
+            return service.Insert();
         }
 
-        // PUT api/<Treatment>/5
+        // PUT api/<Service>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<Treatment>/5
+        // DELETE api/<Service>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
