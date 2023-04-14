@@ -1,0 +1,35 @@
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.exe
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.deps.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.runtimeconfig.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.pdb
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Http.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Options.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Primitives.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Logging.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.OpenApi.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Twilio.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Twilio.AspNet.Common.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Twilio.AspNet.Core.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\native\sni.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\runtimes\win-x64\native\sni.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

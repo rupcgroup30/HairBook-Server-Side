@@ -3,6 +3,9 @@ using System.Data;
 using HairBook_Server_Side.Models;
 using Microsoft.VisualBasic;
 using System.Globalization;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace HairBook_Server_Side.Models.DAL
 {
@@ -136,17 +139,35 @@ namespace HairBook_Server_Side.Models.DAL
             {
                 SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
+
+
+
                 Client client = new Client();
 
                 while (dataReader.Read())
                 {
+                    const string accountSid = "AC058a816c6d23d3253a953a08894b0a23";
+                    const string authToken = "e532ed4b1dae8226a15126d0df2bd935";
 
+                    TwilioClient.Init(accountSid, authToken);
+                    Random rand = new Random();
+                    int code = rand.Next(1000, 9999);
+                    var messageOptions = new CreateMessageOptions(
+                    new PhoneNumber("whatsapp:+972" + phoneNum.Substring(1)));
+                    messageOptions.From = new PhoneNumber("whatsapp:+14155238886");
+                    messageOptions.Body = "Your Twilio code is "+code;
+
+
+                    var message = MessageResource.Create(messageOptions);
+
+                    Console.WriteLine(message.Body);
                     client.FirstName = dataReader["firstName"].ToString();
                     client.LastName = dataReader["lastName"].ToString();
                     client.PhoneNum = dataReader["phoneNum"].ToString();
                     client.BirthDate = ((DateTime)dataReader["birthDate"]);
                     client.Image = dataReader["image"].ToString();
                     client.Gender = dataReader["gender"].ToString();
+                    client.Code = code;
                 }
                 return client;
             }
@@ -349,6 +370,88 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method read all Employee by Phone number and Password
+        //--------------------------------------------------------------------------------------------------
+        public List<Employee> ReadAllEmployees()
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadAllEmployeesCommandSP("GetAllEmployees", con);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                Employee emp = new Employee();
+                List<Employee> employees = new List<Employee>();
+
+                while (dataReader.Read())
+                {
+
+                    emp.FirstName = dataReader["firstName"].ToString();
+                    emp.LastName = dataReader["lastName"].ToString();
+                    emp.PhoneNum = dataReader["phoneNum"].ToString();
+                    emp.Image = dataReader["image"].ToString();
+                    emp.EmployeeNum = Convert.ToInt32(dataReader["employeeNum"]);
+                    emp.EmpolyeeType = dataReader["employeeType"].ToString();
+                    emp.Password = dataReader["password"].ToString();
+                    emp.StartDate = ((DateTime)dataReader["startDate"]);
+                    employees.Add(emp);
+                }
+                return employees;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Employee SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadAllEmployeesCommandSP(String spName, SqlConnection con)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            return cmd;
+        }
+
 
 
         //--------------------------------------------------------------------------------------------------
@@ -764,13 +867,7 @@ namespace HairBook_Server_Side.Models.DAL
 
             try
             {
-                ///לתקן שיחזיר את מה שהוחזר
-                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
                 return Convert.ToInt32(cmd.ExecuteScalar());
-                //cmd.ExecuteNonQuery();
-                //return Convert.ToInt32(cmd.Parameters["@ConfirmationNum"].Value);
-
-                /// לתקן
             }
             catch (Exception ex)
             {
@@ -814,12 +911,6 @@ namespace HairBook_Server_Side.Models.DAL
 
             cmd.Parameters.AddWithValue("@dateOfCollection", date);
 
-            //SqlParameter confirmationNumberParam = new SqlParameter("@ConfirmationNum", SqlDbType.Int);
-
-            //confirmationNumberParam.Direction = ParameterDirection.Output;
-
-            //cmd.Parameters.Add(confirmationNumberParam);
-
             return cmd;
         }
 
@@ -827,7 +918,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Employee by service
         //--------------------------------------------------------------------------------------------------
-        public List<object> ReadByService(int service)
+        public Object ReadByService(int service)
         {
 
             SqlConnection con;
@@ -843,13 +934,13 @@ namespace HairBook_Server_Side.Models.DAL
                 throw new Exception(ex.Message);
             }
 
-            cmd = CreateReadEmployeeByServuceCommandSP("spGetEmployeeByService", con, service);
+            cmd = CreateReadEmployeeByServiceCommandSP("spGetEmployeeByService", con, service);
 
             try
             {
                 SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-                List<object> Employees = new List<object>();
+                List<Object> Employees = new List<Object>();
 
                 while (dataReader.Read())
                 {
@@ -881,9 +972,9 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //---------------------------------------------------------------------------------
-        // Create the Read Employee SqlCommand
+        // Create the Read Employee by service SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadEmployeeByServuceCommandSP(String spName, SqlConnection con, int service)
+        private SqlCommand CreateReadEmployeeByServiceCommandSP(String spName, SqlConnection con, int service)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -901,5 +992,305 @@ namespace HairBook_Server_Side.Models.DAL
             return cmd;
         }
 
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method read Available dates by employee
+        //--------------------------------------------------------------------------------------------------
+        public Object ReadDatesByEmployee(string EmpPhone)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadDateByEmployeeCommandSP("spGetDatesByEmployee", con, EmpPhone);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<Object> Dates = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    Dates.Add(new
+                    {
+                        startDate = (DateTime)dataReader["startDate"],
+                        endDate = (DateTime)dataReader["endDate"],
+                        dayOfWeek = dataReader["DayOfWeek"].ToString()
+                    });
+                }
+                return Dates;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Available Dates by Employee SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadDateByEmployeeCommandSP(String spName, SqlConnection con, string EmpPhone)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@phoneNumber", EmpPhone);
+
+            return cmd;
+        }
+
+        //--------------------------------------------------------------------------------------------------
+        // This method read Available dates by employee
+        //--------------------------------------------------------------------------------------------------
+        public List<string> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadAvailableTimesCommandSP("spGetAvailableTimes", con, serviceNum,phoneNum,Date);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<string> Times = new List<string>();
+
+                while (dataReader.Read())
+                {
+                    Times.Add(dataReader["DayOfWeek"].ToString());
+                }
+                return Times;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Available Dates by Employee SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadAvailableTimesCommandSP(String spName, SqlConnection con, int serviceNum, string phoneNum, DateTime Date)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@numOfCare", serviceNum);
+
+            cmd.Parameters.AddWithValue("@phoneNumber", phoneNum);
+
+            cmd.Parameters.AddWithValue("@date", Date);
+
+            return cmd;
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method inserts a Waitingqueue to the Waiting table 
+        //--------------------------------------------------------------------------------------------------
+        public int InsertToWaitingList(Queue queue)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateInsertToWaitingListCommandWithStoredProcedure("spInsertToWait", con, queue);// create the command
+
+            try
+            {
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Service SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateInsertToWaitingListCommandWithStoredProcedure(String spName, SqlConnection con, Queue queue)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@careKind", queue.ServiceNum);
+
+            cmd.Parameters.AddWithValue("@phoneNumClient", queue.Clientphone);
+
+            cmd.Parameters.AddWithValue("@QueueDate", queue.Date);
+
+            cmd.Parameters.AddWithValue("@Time", queue.Time);
+
+            return cmd;
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method Reads a Client phones to remind client to order a queue 
+        //--------------------------------------------------------------------------------------------------
+        public List<string> ReadPhonesToRemind()
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadPhonesToRemindCommandWithStoredProcedure("OrderQueueReminder", con);// create the command
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<string> Phones = new List<string>();
+
+                while (dataReader.Read())
+                {
+                    Phones.Add(dataReader["phoneNumClient"].ToString());
+                }
+                return Phones;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Employee SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadPhonesToRemindCommandWithStoredProcedure(String spName, SqlConnection con)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            return cmd;
+        }
+
+
     }
+
+
 }

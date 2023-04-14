@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HairBook_Server_Side.Models;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,22 +11,31 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<QueueController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<string> Get(int serviceNum,string phoneNum, DateTime Date)
         {
-            return new string[] { "value1", "value2" };
+            Queue queue= new Queue();
+            return queue.ReadAvailableTimes(serviceNum, phoneNum, Date);
         }
 
         // GET api/<QueueController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("/GetQueueReminder")]
+        public List<string> GetPhonesToRemind()
         {
-            return "value";
+            Queue queue = new Queue();
+            return queue.ReadPhonesToRemind();
         }
 
         // POST api/<QueueController>
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            //return queue.InsertToWaitingList(queue);
+        }
+
+        [HttpPost("/Queue")]
+        public int PostIntoWaiting([FromBody] Queue queue)
+        {
+            return queue.InsertToWaitingList(queue);
         }
 
         // PUT api/<QueueController>/5

@@ -26,10 +26,24 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadEmployee(phoneNum,password);
         }
 
-        public List<object> ReadByService(int service)
+        public List<Employee> ReadAllEmp()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadAllEmployees();
+        }
+
+        public Object ReadByService(int service)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadByService(service);
+        
+       }
+
+        public Object ReadDatesByEmployee(string EmpPhone)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadDatesByEmployee(EmpPhone);
         }
     }
+
 }
