@@ -146,8 +146,8 @@ namespace HairBook_Server_Side.Models.DAL
 
                 while (dataReader.Read())
                 {
-                    const string accountSid = "AC058a816c6d23d3253a953a08894b0a23";
-                    const string authToken = "e532ed4b1dae8226a15126d0df2bd935";
+                    const string accountSid = "AC19a8ff3d22acff9a3caa5900baa0e56f";
+                    const string authToken = "1a942ebb05942d2e90b79831a9b55461";
 
                     TwilioClient.Init(accountSid, authToken);
                     Random rand = new Random();
@@ -155,7 +155,7 @@ namespace HairBook_Server_Side.Models.DAL
                     var messageOptions = new CreateMessageOptions(
                     new PhoneNumber("whatsapp:+972" + phoneNum.Substring(1)));
                     messageOptions.From = new PhoneNumber("whatsapp:+14155238886");
-                    messageOptions.Body = "Your Twilio code is "+code;
+                    messageOptions.Body = "Your HairBook code is "+code;
 
 
                     var message = MessageResource.Create(messageOptions);
@@ -397,12 +397,11 @@ namespace HairBook_Server_Side.Models.DAL
             {
                 SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-                Employee emp = new Employee();
                 List<Employee> employees = new List<Employee>();
 
                 while (dataReader.Read())
                 {
-
+                    Employee emp = new Employee();
                     emp.FirstName = dataReader["firstName"].ToString();
                     emp.LastName = dataReader["lastName"].ToString();
                     emp.PhoneNum = dataReader["phoneNum"].ToString();
