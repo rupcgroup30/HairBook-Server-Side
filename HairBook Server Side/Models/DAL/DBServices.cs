@@ -117,6 +117,66 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Clients by Phone number
         //--------------------------------------------------------------------------------------------------
+        public int GetCode(string phoneNum)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadClientCommandSP("spGetClient", con, phoneNum);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                Random rand = new Random();
+                int code = rand.Next(1000, 9999); ;
+                while (dataReader.Read())
+                {
+
+                    const string accountSid = "AC19a8ff3d22acff9a3caa5900baa0e56f";
+                    const string authToken = "46dc1d84da3c03c33b852fd63e0aeaf6";
+
+                    TwilioClient.Init(accountSid, authToken);
+                    var messageOptions = new CreateMessageOptions(
+                    new PhoneNumber("whatsapp:+972" + phoneNum.Substring(1)));
+                    messageOptions.From = new PhoneNumber("whatsapp:+14155238886");
+                    messageOptions.Body = "Your HairBook code is " + code;
+                    var message = MessageResource.Create(messageOptions);
+                    Console.WriteLine(message.Body);
+                }
+                    return code;
+
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //--------------------------------------------------------------------------------------------------
+        // This method read Clients by Phone number
+        //--------------------------------------------------------------------------------------------------
         public Client ReadClient(string phoneNum)
         {
 
@@ -146,28 +206,12 @@ namespace HairBook_Server_Side.Models.DAL
 
                 while (dataReader.Read())
                 {
-                    const string accountSid = "AC19a8ff3d22acff9a3caa5900baa0e56f";
-                    const string authToken = "1a942ebb05942d2e90b79831a9b55461";
-
-                    TwilioClient.Init(accountSid, authToken);
-                    Random rand = new Random();
-                    int code = rand.Next(1000, 9999);
-                    var messageOptions = new CreateMessageOptions(
-                    new PhoneNumber("whatsapp:+972" + phoneNum.Substring(1)));
-                    messageOptions.From = new PhoneNumber("whatsapp:+14155238886");
-                    messageOptions.Body = "Your HairBook code is "+code;
-
-
-                    var message = MessageResource.Create(messageOptions);
-
-                    Console.WriteLine(message.Body);
                     client.FirstName = dataReader["firstName"].ToString();
                     client.LastName = dataReader["lastName"].ToString();
                     client.PhoneNum = dataReader["phoneNum"].ToString();
                     client.BirthDate = ((DateTime)dataReader["birthDate"]);
                     client.Image = dataReader["image"].ToString();
                     client.Gender = dataReader["gender"].ToString();
-                    client.Code = code;
                 }
                 return client;
             }
@@ -187,6 +231,7 @@ namespace HairBook_Server_Side.Models.DAL
             }
 
         }
+
 
 
         //---------------------------------------------------------------------------------
@@ -776,9 +821,9 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //--------------------------------------------------------------------------------------------------
-        // This method update a product in the product table 
+        // This method update a product in the product table and  inserts a product to the OrderProduct table 
         //--------------------------------------------------------------------------------------------------
-        public int UpdateProduct(int id, int amount)
+        public int UpdateProduct(int id, string phoneNum, int amount, DateTime date)
         {
 
             SqlConnection con;
@@ -794,12 +839,13 @@ namespace HairBook_Server_Side.Models.DAL
                 throw new Exception(ex.Message);
             }
 
-            cmd = CreateUpdateProductCommandWithStoredProcedure("spUpdateAmountPoduct", con, id, amount);// create the command
+            cmd = CreateUpdateProductCommandWithStoredProcedure("spUpdateAmountPoduct", con, id,phoneNum,amount ,date);// create the command
 
             try
             {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected;
+                //int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                //return numEffected;
+                return Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (Exception ex)
             {
@@ -822,74 +868,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the update Product SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount)
-        {
-
-            SqlCommand cmd = new SqlCommand(); // create the command object
-
-            cmd.Connection = con;              // assign the connection to the command object
-
-            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
-
-            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
-
-            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
-
-            cmd.Parameters.AddWithValue("@productNum", id);
-
-            cmd.Parameters.AddWithValue("@amount", amount);
-
-            return cmd;
-        }
-
-
-        //--------------------------------------------------------------------------------------------------
-        // This method inserts a product to the OrderProduct table 
-        //--------------------------------------------------------------------------------------------------
-        public int OrderProduct(int id, string phoneNum, int amount, DateTime date)
-        {
-
-            SqlConnection con;
-            SqlCommand cmd;
-
-            try
-            {
-                con = connect("myProjDB"); // create the connection
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw new Exception(ex.Message);
-            }
-
-            cmd = CreateOrderProductCommandWithStoredProcedure("spInsertOrderPoduct", con, id,phoneNum, amount, date);// create the command
-
-            try
-            {
-                return Convert.ToInt32(cmd.ExecuteScalar());
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw new Exception(ex.Message);
-            }
-
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-                }
-            }
-
-        }
-
-
-        //---------------------------------------------------------------------------------
-        // Create the insert OrderProduct SqlCommand using a stored procedure
-        //---------------------------------------------------------------------------------
-        private SqlCommand CreateOrderProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date)
+        private SqlCommand CreateUpdateProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -912,6 +891,7 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
 
 
         //--------------------------------------------------------------------------------------------------

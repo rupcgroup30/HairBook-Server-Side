@@ -25,6 +25,15 @@ namespace HairBook_Server_Side.Controllers
             return client.Read(phoneNum);
         }
 
+        // GET api/<UserController>/5
+        [HttpGet("GetCode")]
+        public int GetCode(string phoneNum)
+        {
+            Client client = new Client();
+            return client.GetCode(phoneNum);
+        }
+
+
         // POST api/<UserController>
         [HttpPost]
         public int Post([FromBody] Client client)

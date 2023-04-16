@@ -7,10 +7,8 @@ namespace HairBook_Server_Side.Models
 
         private DateTime birthDate;
         private string gender;
-        private int code;
         public DateTime BirthDate { get => birthDate; set => birthDate = value; }
         public string Gender { get => gender; set => gender = value; }
-        public int Code { get => code; set => code = value; }
 
         public int Insert()
         {
@@ -22,6 +20,12 @@ namespace HairBook_Server_Side.Models
         {
             DBServices dbs = new DBServices();
             return dbs.ReadClient(phoneNum);
+        }
+
+        public int GetCode(string phoneNum)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.GetCode(phoneNum);
         }
     }
 }

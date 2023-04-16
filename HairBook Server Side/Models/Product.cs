@@ -38,10 +38,7 @@ namespace HairBook_Server_Side.Models
         public int UpdateNOrder(int id,string phoneNum, int amount, DateTime date)
         {
             DBServices dbs = new DBServices();
-            if (dbs.UpdateProduct(id, amount) != 0)
-                return dbs.OrderProduct(id, phoneNum, amount, date);
-            else 
-                return 0;
+            return dbs.UpdateProduct(id, phoneNum,amount,date);
         }
     }
 }
