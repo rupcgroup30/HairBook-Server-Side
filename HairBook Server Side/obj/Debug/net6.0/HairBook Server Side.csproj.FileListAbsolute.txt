@@ -49,3 +49,8 @@ C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\Twilio.AspNet.Common.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\Twilio.AspNet.Core.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\web.config
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\appsettings.Development.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\appsettings.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\HairBook Server Side.deps.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\HairBook Server Side.runtimeconfig.json

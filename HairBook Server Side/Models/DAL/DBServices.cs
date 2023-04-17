@@ -1179,72 +1179,72 @@ namespace HairBook_Server_Side.Models.DAL
         }
 
 
-        //--------------------------------------------------------------------------------------------------
-        // This method update a product in the product table and  inserts a product to the OrderProduct table 
-        //--------------------------------------------------------------------------------------------------
-        public int UpdateProductAmount(int id, int amount)
-        {
+        ////--------------------------------------------------------------------------------------------------
+        //// This method update a product in the product table and  inserts a product to the OrderProduct table 
+        ////--------------------------------------------------------------------------------------------------
+        //public int UpdateProductAmount(int id, int amount)
+        //{
 
-            SqlConnection con;
-            SqlCommand cmd;
+        //    SqlConnection con;
+        //    SqlCommand cmd;
 
-            try
-            {
-                con = connect("myProjDB"); // create the connection
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw new Exception(ex.Message);
-            }
+        //    try
+        //    {
+        //        con = connect("myProjDB"); // create the connection
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // write to log
+        //        throw new Exception(ex.Message);
+        //    }
 
-            cmd = CreateUpdateProductAmountCommandWithStoredProcedure("UpdateProductAmount", con, id, amount);// create the command
+        //    cmd = CreateUpdateProductAmountCommandWithStoredProcedure("UpdateProductAmount", con, id, amount);// create the command
 
-            try
-            {
-                int numEffected = cmd.ExecuteNonQuery(); // execute the command
-                return numEffected;
-            }
-            catch (Exception ex)
-            {
-                // write to log
-                throw new Exception(ex.Message);
-            }
+        //    try
+        //    {
+        //        int numEffected = cmd.ExecuteNonQuery(); // execute the command
+        //        return numEffected;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // write to log
+        //        throw new Exception(ex.Message);
+        //    }
 
-            finally
-            {
-                if (con != null)
-                {
-                    // close the db connection
-                    con.Close();
-                }
-            }
+        //    finally
+        //    {
+        //        if (con != null)
+        //        {
+        //            // close the db connection
+        //            con.Close();
+        //        }
+        //    }
 
-        }
+        //}
 
 
-        //---------------------------------------------------------------------------------
-        // Create the update Product SqlCommand using a stored procedure
-        //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateProductAmountCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount)
-        {
+        ////---------------------------------------------------------------------------------
+        //// Create the update Product SqlCommand using a stored procedure
+        ////---------------------------------------------------------------------------------
+        //private SqlCommand CreateUpdateProductAmountCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount)
+        //{
 
-            SqlCommand cmd = new SqlCommand(); // create the command object
+        //    SqlCommand cmd = new SqlCommand(); // create the command object
 
-            cmd.Connection = con;              // assign the connection to the command object
+        //    cmd.Connection = con;              // assign the connection to the command object
 
-            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+        //    cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
 
-            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+        //    cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
 
-            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+        //    cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
 
-            cmd.Parameters.AddWithValue("@productNum", id);
+        //    cmd.Parameters.AddWithValue("@productNum", id);
 
-            cmd.Parameters.AddWithValue("@amount", amount);
+        //    cmd.Parameters.AddWithValue("@amount", amount);
 
-            return cmd;
-        }
+        //    return cmd;
+        //}
 
 
 

@@ -40,17 +40,17 @@ namespace HairBook_Server_Side.Controllers
             return product.UpdateNOrder(id, phoneNum, amount, date);
         }
 
-        [HttpPut("UpdateProdAmount")]
-        public int Put(int id, int amount)
-        {
-            Product product = new Product();
-            return product.UpdateProductAmount(id, amount);
-        }
+        //[HttpPut("UpdateProdAmount")]
+        //public int Put(int id, int amount)
+        //{
+        //    Product product = new Product();
+        //    return product.UpdateProductAmount(id, amount);
+        //}
 
-        // DELETE api/<ProductController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<ProductController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

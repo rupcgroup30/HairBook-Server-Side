@@ -48,11 +48,11 @@ namespace HairBook_Server_Side.Controllers
             return employee.Insert();
         }
 
-        // PUT api/<EmployeeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<EmployeeController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<EmployeeController>/5
         [HttpDelete("{phoneNum}")]

@@ -47,10 +47,10 @@ namespace HairBook_Server_Side.Models
             return dbs.UpdateProduct(id, phoneNum,amount,date);
         }
 
-        public int UpdateProductAmount(int id, int amount)
-        {
-            DBServices dbs = new DBServices();
-            return dbs.UpdateProductAmount(id, amount);
-        }
+        //public int UpdateProductAmount(int id, int amount)
+        //{
+        //    DBServices dbs = new DBServices();
+        //    return dbs.UpdateProductAmount(id, amount);
+        //}
     }
 }

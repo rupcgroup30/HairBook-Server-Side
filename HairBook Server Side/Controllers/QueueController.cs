@@ -34,29 +34,29 @@ namespace HairBook_Server_Side.Controllers
         }
         
 
-        // POST api/<QueueController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-            //return queue.InsertToWaitingList(queue);
-        }
+        //// POST api/<QueueController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //    //return queue.InsertToWaitingList(queue);
+        //}
 
-        [HttpPost("/Queue")]
+        [HttpPost("/PostIntoWaiting")]
         public int PostIntoWaiting([FromBody] Queue queue)
         {
             return queue.InsertToWaitingList(queue);
         }
 
-        // PUT api/<QueueController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<QueueController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
-        // DELETE api/<QueueController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/<QueueController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
