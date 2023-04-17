@@ -37,6 +37,142 @@ namespace HairBook_Server_Side.Models.DAL
             return con;
         }
 
+        //--------------------------------------------------------------------------------------------------
+        // This method inserts a Hair color to the HairColor table 
+        //--------------------------------------------------------------------------------------------------
+        public int InsertHairColor(HairColor hairColor)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateInsertHairColorCommandWithStoredProcedure("spInsertHairColor", con, hairColor);// create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Hair Color SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateInsertHairColorCommandWithStoredProcedure(String spName, SqlConnection con, HairColor hairColor)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@colorNum", hairColor.ColorNum);
+
+            cmd.Parameters.AddWithValue("@colorName", hairColor.ColorName);
+
+            return cmd;
+        }
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method inserts a Hair color to the HairColor table 
+        //--------------------------------------------------------------------------------------------------
+        public int InsertClientHairColor(string phoneNum, int colorNum)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateInsertClientHairColorCommandWithStoredProcedure("spInsertClientHairColor", con, phoneNum, colorNum);// create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Hair Color SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateInsertClientHairColorCommandWithStoredProcedure(String spName, SqlConnection con, string phoneNum, int colorNum)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@colorNum", colorNum);
+
+            cmd.Parameters.AddWithValue("@phoneNum", phoneNum);
+
+            return cmd;
+        }
+
+
 
         //--------------------------------------------------------------------------------------------------
         // This method inserts a Client to the client table 
@@ -369,6 +505,7 @@ namespace HairBook_Server_Side.Models.DAL
                     emp.PhoneNum = dataReader["phoneNum"].ToString();
                     emp.Image = dataReader["image"].ToString();
                     emp.EmployeeNum = Convert.ToInt32(dataReader["employeeNum"]);
+                    emp.Rank = Convert.ToInt32(dataReader["Rank"]);
                     emp.EmpolyeeType = dataReader["employeeType"].ToString();
                     emp.Password = dataReader["password"].ToString();
                     emp.StartDate = ((DateTime)dataReader["startDate"]);
@@ -416,6 +553,71 @@ namespace HairBook_Server_Side.Models.DAL
             return cmd;
         }
 
+        //--------------------------------------------------------------------------------------------------
+        // This method delete Employee by Phone number
+        //--------------------------------------------------------------------------------------------------
+        public int DeleteEmployee(string phoneNum)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateDeleteEmployeeCommandSP("spDeleteEmployee", con, phoneNum);
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Employee SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateDeleteEmployeeCommandSP(String spName, SqlConnection con, string phoneNum)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@phoneNum", phoneNum);
+
+            return cmd;
+        }
+
 
         //--------------------------------------------------------------------------------------------------
         // This method read all Employee by Phone number and Password
@@ -452,6 +654,7 @@ namespace HairBook_Server_Side.Models.DAL
                     emp.PhoneNum = dataReader["phoneNum"].ToString();
                     emp.Image = dataReader["image"].ToString();
                     emp.EmployeeNum = Convert.ToInt32(dataReader["employeeNum"]);
+                    emp.Rank = Convert.ToInt32(dataReader["Rank"]);
                     emp.EmpolyeeType = dataReader["employeeType"].ToString();
                     emp.Password = dataReader["password"].ToString();
                     emp.StartDate = ((DateTime)dataReader["startDate"]);
@@ -657,6 +860,89 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //--------------------------------------------------------------------------------------------------
+        // This method read Related Products by series name
+        //--------------------------------------------------------------------------------------------------
+        public List<Product> ReadRelatedProducts(string seriesName)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadRelatedProductsCommandSP("spGetRelatedProducts", con,seriesName);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<Product> products = new List<Product>();
+
+                while (dataReader.Read())
+                {
+                    Product product = new Product();
+                    product.ProductName = dataReader["Name"].ToString();
+                    product.Description = dataReader["Description"].ToString();
+                    product.Price = Convert.ToDouble(dataReader["price"]);
+                    product.SeriesName = dataReader["seriesName"].ToString();
+                    product.CareKind = dataReader["CareKind"].ToString();
+                    product.Amount = Convert.ToInt32(dataReader["Amount"]);
+                    product.Image = dataReader["image"].ToString();
+                    product.ProductNum = Convert.ToInt32(dataReader["NumProduct"]);
+                    products.Add(product);
+                }
+                return products;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Related products SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadRelatedProductsCommandSP(String spName, SqlConnection con,string seriesName)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@seriesName", seriesName);
+
+            return cmd;
+        }
+
+
+
+        //--------------------------------------------------------------------------------------------------
         // This method inserts a Treatment to the Treatment table 
         //--------------------------------------------------------------------------------------------------
         public int InsertService(Service service)
@@ -839,7 +1125,7 @@ namespace HairBook_Server_Side.Models.DAL
                 throw new Exception(ex.Message);
             }
 
-            cmd = CreateUpdateProductCommandWithStoredProcedure("spUpdateAmountPoduct", con, id,phoneNum,amount ,date);// create the command
+            cmd = CreateOrderProductCommandWithStoredProcedure("spOrderPoduct", con, id,phoneNum,amount ,date);// create the command
 
             try
             {
@@ -850,7 +1136,7 @@ namespace HairBook_Server_Side.Models.DAL
             catch (Exception ex)
             {
                 // write to log
-                throw new Exception(ex.Message);
+                throw new Exception(ex.Message+" Phone not found");
             }
 
             finally
@@ -866,9 +1152,9 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //---------------------------------------------------------------------------------
-        // Create the update Product SqlCommand using a stored procedure
+        // Create the order Product SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date)
+        private SqlCommand CreateOrderProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -891,6 +1177,75 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method update a product in the product table and  inserts a product to the OrderProduct table 
+        //--------------------------------------------------------------------------------------------------
+        public int UpdateProductAmount(int id, int amount)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateUpdateProductAmountCommandWithStoredProcedure("UpdateProductAmount", con, id, amount);// create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the update Product SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateUpdateProductAmountCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@productNum", id);
+
+            cmd.Parameters.AddWithValue("@amount", amount);
+
+            return cmd;
+        }
+
 
 
 
@@ -1050,7 +1405,7 @@ namespace HairBook_Server_Side.Models.DAL
         }
 
         //--------------------------------------------------------------------------------------------------
-        // This method read Available dates by employee
+        // This method read Available times by employee,service and date
         //--------------------------------------------------------------------------------------------------
         public List<string> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date)
         {
@@ -1078,7 +1433,8 @@ namespace HairBook_Server_Side.Models.DAL
 
                 while (dataReader.Read())
                 {
-                    Times.Add(dataReader["DayOfWeek"].ToString());
+
+                    Times.Add(dataReader["TimeValue"].ToString());
                 }
                 return Times;
             }
@@ -1100,7 +1456,7 @@ namespace HairBook_Server_Side.Models.DAL
         }
 
         //---------------------------------------------------------------------------------
-        // Create the Read Available Dates by Employee SqlCommand
+        // Create the Read Available times by employee,service and date SqlCommand
         //---------------------------------------------------------------------------------
         private SqlCommand CreateReadAvailableTimesCommandSP(String spName, SqlConnection con, int serviceNum, string phoneNum, DateTime Date)
         {
@@ -1267,6 +1623,58 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+        //--------------------------------------------------------------------------------------------------
+        // This method Reads a Client phones to remind tommorow queue 
+        //--------------------------------------------------------------------------------------------------
+        public List<string> QueueReminder()
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadPhonesToRemindCommandWithStoredProcedure("spQueueReminder", con);// create the command
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<string> Phones = new List<string>();
+
+                while (dataReader.Read())
+                {
+                    Phones.Add(dataReader["phoneNumClient"].ToString());
+                }
+                return Phones;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
 
 
     }

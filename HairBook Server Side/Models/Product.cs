@@ -35,10 +35,22 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadProducts();
         }
 
+        public List<Product> ReadRelatedProducts(string seriesName)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadRelatedProducts(seriesName);
+        }
+
         public int UpdateNOrder(int id,string phoneNum, int amount, DateTime date)
         {
             DBServices dbs = new DBServices();
             return dbs.UpdateProduct(id, phoneNum,amount,date);
+        }
+
+        public int UpdateProductAmount(int id, int amount)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.UpdateProductAmount(id, amount);
         }
     }
 }

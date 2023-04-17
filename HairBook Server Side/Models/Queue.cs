@@ -38,6 +38,11 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadPhonesToRemind();
         }
 
+        public List<string> QueueReminder()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.QueueReminder();
+        }
 
 
     }

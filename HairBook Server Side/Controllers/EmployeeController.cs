@@ -55,9 +55,11 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // DELETE api/<EmployeeController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{phoneNum}")]
+        public int Delete(string phoneNum)
         {
+            Employee emp = new Employee();
+            return emp.DeleteEmployee(phoneNum);
         }
     }
 }

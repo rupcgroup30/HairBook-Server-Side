@@ -18,12 +18,21 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // GET api/<QueueController>/5
-        [HttpGet("/GetQueueReminder")]
+        [HttpGet("/GetOrderQueueReminder")]
         public List<string> GetPhonesToRemind()
         {
             Queue queue = new Queue();
             return queue.ReadPhonesToRemind();
         }
+
+        // GET api/<QueueController>/5
+        [HttpGet("/TommorowQueueReminder")]
+        public List<string> QueueReminder()
+        {
+            Queue queue = new Queue();
+            return queue.QueueReminder();
+        }
+        
 
         // POST api/<QueueController>
         [HttpPost]

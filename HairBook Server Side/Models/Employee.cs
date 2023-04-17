@@ -9,15 +9,23 @@ namespace HairBook_Server_Side.Models
         private String password;
         private String empolyeeType;
         private DateTime startDate;
+        private int rank;
         public int EmployeeNum { get => employeeNum; set => employeeNum = value; }
         public string Password { get => password; set => password = value; }
         public string EmpolyeeType { get => empolyeeType; set => empolyeeType = value; }
         public DateTime StartDate { get => startDate; set => startDate = value; }
+        public int Rank { get => rank; set => rank = value; }
 
         public int Insert()
         {
             DBServices dbs = new DBServices();
             return dbs.InsertEmployee(this);
+        }
+
+        public int DeleteEmployee(string phoneNum)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.DeleteEmployee(phoneNum);
         }
 
         public Employee Read(string phoneNum, string password)
