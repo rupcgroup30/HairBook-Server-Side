@@ -18,7 +18,7 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // GET api/<ProductController>/5
-        [HttpGet("{seriesName}")]
+        [HttpGet("GetRelatedProds")]
         public List<Product> Get(string seriesName)
         {
             Product product = new Product();
@@ -26,26 +26,26 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // POST api/<ProductController>
-        [HttpPost]
+        [HttpPost("InsertProduct")]
         public int Post([FromBody] Product product)
         {
             return product.Insert();
         }
 
         // PUT api/<ProductController>/5
-        [HttpPut]
+        [HttpPut("UpdateNOrderProduct")]
         public int Put(int id, string phoneNum, int amount, DateTime date)
         {
             Product product = new Product();
             return product.UpdateNOrder(id, phoneNum, amount, date);
         }
 
-        //[HttpPut("UpdateProdAmount")]
-        //public int Put(int id, int amount)
-        //{
-        //    Product product = new Product();
-        //    return product.UpdateProductAmount(id, amount);
-        //}
+        [HttpPut("{id}/{amount}/{price}")]
+        public int Put(int id, int amount,float price)
+        {
+            Product product = new Product();
+            return product.UpdateProduct(id, amount,price);
+        }
 
         //// DELETE api/<ProductController>/5
         //[HttpDelete("{id}")]

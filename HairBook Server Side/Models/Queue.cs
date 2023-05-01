@@ -26,10 +26,16 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertToWaitingList(this);
         }
 
-        public List<string> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date)
+        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadAvailableTimes(serviceNum, phoneNum, Date);
+        }
+
+        public int OrderQueue()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.OrderQueue(this);
         }
 
         public List<string> ReadPhonesToRemind()
@@ -43,6 +49,14 @@ namespace HairBook_Server_Side.Models
             DBServices dbs = new DBServices();
             return dbs.QueueReminder();
         }
+
+        public int DeleteQueue(int queueNum)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.DeleteQueue(queueNum);
+        }
+
+        
 
 
     }

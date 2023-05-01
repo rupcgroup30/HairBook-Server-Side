@@ -10,11 +10,13 @@ namespace HairBook_Server_Side.Models
         private String empolyeeType;
         private DateTime startDate;
         private int rank;
+        private bool isActive;
         public int EmployeeNum { get => employeeNum; set => employeeNum = value; }
         public string Password { get => password; set => password = value; }
         public string EmpolyeeType { get => empolyeeType; set => empolyeeType = value; }
         public DateTime StartDate { get => startDate; set => startDate = value; }
         public int Rank { get => rank; set => rank = value; }
+        public bool IsActive { get => isActive; set => isActive = value; }
 
         public int Insert()
         {
@@ -22,17 +24,18 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertEmployee(this);
         }
 
-        public int DeleteEmployee(string phoneNum)
-        {
-            DBServices dbs = new DBServices();
-            return dbs.DeleteEmployee(phoneNum);
-        }
-
         public Employee Read(string phoneNum, string password)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadEmployee(phoneNum,password);
         }
+
+        public int UpdateEmployee(string phoneNum, string password, string type, string isActive)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.UpdateEmployee(phoneNum,password,type,isActive);
+        }
+
 
         public List<Employee> ReadAllEmp()
         {

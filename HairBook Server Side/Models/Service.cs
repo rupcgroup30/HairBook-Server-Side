@@ -38,5 +38,11 @@ namespace HairBook_Server_Side.Models
             DBServices dbs = new DBServices();
             return dbs.ReadService();
         }
+
+        public int UpdateService()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.UpdateService(this);
+        }
     }
 }

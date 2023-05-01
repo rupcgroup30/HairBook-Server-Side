@@ -31,11 +31,12 @@ namespace HairBook_Server_Side.Controllers
             return service.Insert();
         }
 
-        //// PUT api/<Service>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<Service>/5
+        [HttpPut("UpdateService")]
+        public int UpdateService([FromBody] Service service)
+        {
+            return service.UpdateService();
+        }
 
         //// DELETE api/<Service>/5
         //[HttpDelete("{id}")]

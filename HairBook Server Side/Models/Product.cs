@@ -44,13 +44,13 @@ namespace HairBook_Server_Side.Models
         public int UpdateNOrder(int id,string phoneNum, int amount, DateTime date)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateProduct(id, phoneNum,amount,date);
+            return dbs.UpdateNOrdetProduct(id, phoneNum,amount,date);
         }
 
-        //public int UpdateProductAmount(int id, int amount)
-        //{
-        //    DBServices dbs = new DBServices();
-        //    return dbs.UpdateProductAmount(id, amount);
-        //}
+        public int UpdateProduct(int id, int amount,float price)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.UpdateProduct(id, amount,price);
+        }
     }
 }

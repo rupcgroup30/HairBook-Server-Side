@@ -10,8 +10,8 @@ namespace HairBook_Server_Side.Controllers
     public class QueueController : ControllerBase
     {
         // GET: api/<QueueController>
-        [HttpGet]
-        public List<string> Get(int serviceNum,string phoneNum, DateTime Date)
+        [HttpGet("GetAvailableTimes")]
+        public List<TimeSpan> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date)
         {
             Queue queue= new Queue();
             return queue.ReadAvailableTimes(serviceNum, phoneNum, Date);
@@ -32,14 +32,14 @@ namespace HairBook_Server_Side.Controllers
             Queue queue = new Queue();
             return queue.QueueReminder();
         }
-        
 
-        //// POST api/<QueueController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //    //return queue.InsertToWaitingList(queue);
-        //}
+
+        // POST api/<QueueController>
+        [HttpPost("OrderQueue")]
+        public int OrderQueue([FromBody] Queue queue)
+        {
+            return queue.OrderQueue();
+        }
 
         [HttpPost("/PostIntoWaiting")]
         public int PostIntoWaiting([FromBody] Queue queue)
@@ -53,10 +53,12 @@ namespace HairBook_Server_Side.Controllers
         //{
         //}
 
-        //// DELETE api/<QueueController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<QueueController>/5
+        [HttpDelete("DeleteQueue")]
+        public int DeleteQueue(int queueNum)
+        {
+            Queue queue = new Queue();
+            return queue.DeleteQueue(queueNum);
+        }
     }
 }

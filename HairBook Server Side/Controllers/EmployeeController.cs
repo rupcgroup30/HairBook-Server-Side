@@ -48,18 +48,18 @@ namespace HairBook_Server_Side.Controllers
             return employee.Insert();
         }
 
-        //// PUT api/<EmployeeController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        // DELETE api/<EmployeeController>/5
-        [HttpDelete("{phoneNum}")]
-        public int Delete(string phoneNum)
+        // PUT api/<EmployeeController>/5
+        [HttpPut("UpdateEmployee")]
+        public int UpdateEmployee( string phoneNum,string password, string type,string isActive)
         {
             Employee emp = new Employee();
-            return emp.DeleteEmployee(phoneNum);
+            return emp.UpdateEmployee(phoneNum,password,type,isActive);
         }
+
+        //// DELETE api/<EmployeeController>/5
+        //[HttpDelete("{phoneNum}")]
+        //public int Delete(string phoneNum)
+        //{
+        //}
     }
 }
