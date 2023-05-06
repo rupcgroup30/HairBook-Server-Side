@@ -10,22 +10,22 @@ namespace HairBook_Server_Side.Models
         public DateTime BirthDate { get => birthDate; set => birthDate = value; }
         public string Gender { get => gender; set => gender = value; }
 
-        public int Insert()
+        public int Insert(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertClient(this);
+            return dbs.InsertClient(this, hairSalonId);
         }
 
-        public Client Read(string phoneNum)
+        public Client Read(string phoneNum,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadClient(phoneNum);
+            return dbs.ReadClient(phoneNum, hairSalonId);
         }
 
-        public int GetCode(string phoneNum)
+        public int GetCode(string phoneNum, int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.GetCode(phoneNum);
+            return dbs.GetCode(phoneNum, hairSalonId);
         }
     }
 }

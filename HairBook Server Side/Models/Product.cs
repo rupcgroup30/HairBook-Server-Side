@@ -13,7 +13,7 @@ namespace HairBook_Server_Side.Models
         private string careKind;
         private int amount;
         private string image;
-
+        private bool isActive;
         public string ProductName { get => productName; set => productName = value; }
         public string Description { get => description; set => description = value; }
         public double Price { get => price; set => price = value; }
@@ -22,35 +22,36 @@ namespace HairBook_Server_Side.Models
         public int Amount { get => amount; set => amount = value; }
         public int ProductNum { get => productNum; set => productNum = value; }
         public string Image { get => image; set => image = value; }
+        public bool IsActive { get => isActive; set => isActive = value; }
 
-        public int Insert()
+        public int Insert(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertProduct(this);
+            return dbs.InsertProduct(this, hairSalonId);
         }
 
-        public List<Product> Read()
+        public List<Product> Read(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadProducts();
+            return dbs.ReadProducts( hairSalonId);
         }
 
-        public List<Product> ReadRelatedProducts(string seriesName)
+        public List<Product> ReadRelatedProducts(string seriesName,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadRelatedProducts(seriesName);
+            return dbs.ReadRelatedProducts(seriesName, hairSalonId);
         }
 
-        public int UpdateNOrder(int id,string phoneNum, int amount, DateTime date)
+        public int UpdateNOrder(int id,string phoneNum, int amount, DateTime date,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateNOrdetProduct(id, phoneNum,amount,date);
+            return dbs.UpdateNOrdetProduct(id, phoneNum,amount,date, hairSalonId);
         }
 
-        public int UpdateProduct(int id, int amount,float price)
+        public int UpdateProduct(int id, int amount,float price,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateProduct(id, amount,price);
+            return dbs.UpdateProduct(id, amount,price, hairSalonId);
         }
     }
 }

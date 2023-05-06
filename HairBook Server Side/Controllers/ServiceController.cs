@@ -11,10 +11,10 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<Service>
         [HttpGet]
-        public List<Service> Get()
+        public List<Service> Get(int hairSalonId)
         {
             Service service=new Service();
-            return service.Read();
+            return service.Read(hairSalonId);
         }
 
         //// GET api/<Service>/5
@@ -26,16 +26,16 @@ namespace HairBook_Server_Side.Controllers
 
         // POST api/<Service>
         [HttpPost]
-        public int Post([FromBody] Service service)
+        public int Post([FromBody] Service service,int hairSalonId)
         {
-            return service.Insert();
+            return service.Insert(hairSalonId);
         }
 
         // PUT api/<Service>/5
         [HttpPut("UpdateService")]
-        public int UpdateService([FromBody] Service service)
+        public int UpdateService([FromBody] Service service,int hairSalonId)
         {
-            return service.UpdateService();
+            return service.UpdateService(hairSalonId);
         }
 
         //// DELETE api/<Service>/5

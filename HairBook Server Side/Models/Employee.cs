@@ -18,42 +18,42 @@ namespace HairBook_Server_Side.Models
         public int Rank { get => rank; set => rank = value; }
         public bool IsActive { get => isActive; set => isActive = value; }
 
-        public int Insert()
+        public int Insert(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertEmployee(this);
+            return dbs.InsertEmployee(this, hairSalonId);
         }
 
-        public Employee Read(string phoneNum, string password)
+        public Employee Read(string phoneNum, string password,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadEmployee(phoneNum,password);
+            return dbs.ReadEmployee(phoneNum,password, hairSalonId);
         }
 
-        public int UpdateEmployee(string phoneNum, string password, string type, string isActive)
+        public int UpdateEmployee(string phoneNum, string password, string type, string isActive, int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateEmployee(phoneNum,password,type,isActive);
+            return dbs.UpdateEmployee(phoneNum,password,type,isActive, hairSalonId);
         }
 
 
-        public List<Employee> ReadAllEmp()
+        public List<Employee> ReadAllEmp(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadAllEmployees();
+            return dbs.ReadAllEmployees(hairSalonId);
         }
 
-        public Object ReadByService(int service)
+        public Object ReadByService(int service,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadByService(service);
+            return dbs.ReadByService(service, hairSalonId);
         
        }
 
-        public Object ReadDatesByEmployee(string EmpPhone)
+        public Object ReadDatesByEmployee(string EmpPhone,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadDatesByEmployee(EmpPhone);
+            return dbs.ReadDatesByEmployee(EmpPhone, hairSalonId);
         }
     }
 

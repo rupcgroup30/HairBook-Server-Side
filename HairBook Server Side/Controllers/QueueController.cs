@@ -11,40 +11,40 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<QueueController>
         [HttpGet("GetAvailableTimes")]
-        public List<TimeSpan> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date)
+        public List<TimeSpan> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date, int hairSalonId)
         {
             Queue queue= new Queue();
-            return queue.ReadAvailableTimes(serviceNum, phoneNum, Date);
+            return queue.ReadAvailableTimes(serviceNum, phoneNum, Date, hairSalonId);
         }
 
         // GET api/<QueueController>/5
         [HttpGet("/GetOrderQueueReminder")]
-        public List<string> GetPhonesToRemind()
+        public List<string> GetPhonesToRemind(int hairSalonId)
         {
             Queue queue = new Queue();
-            return queue.ReadPhonesToRemind();
+            return queue.ReadPhonesToRemind(hairSalonId);
         }
 
         // GET api/<QueueController>/5
         [HttpGet("/TommorowQueueReminder")]
-        public List<string> QueueReminder()
+        public List<string> QueueReminder(int hairSalonId)
         {
             Queue queue = new Queue();
-            return queue.QueueReminder();
+            return queue.QueueReminder(hairSalonId);
         }
 
 
         // POST api/<QueueController>
         [HttpPost("OrderQueue")]
-        public int OrderQueue([FromBody] Queue queue)
+        public int OrderQueue([FromBody] Queue queue,int hairSalonId)
         {
-            return queue.OrderQueue();
+            return queue.OrderQueue(hairSalonId);
         }
 
         [HttpPost("/PostIntoWaiting")]
-        public int PostIntoWaiting([FromBody] Queue queue)
+        public int PostIntoWaiting([FromBody] Queue queue,int hairSalonId)
         {
-            return queue.InsertToWaitingList(queue);
+            return queue.InsertToWaitingList(queue, hairSalonId);
         }
 
         //// PUT api/<QueueController>/5
@@ -55,10 +55,10 @@ namespace HairBook_Server_Side.Controllers
 
         // DELETE api/<QueueController>/5
         [HttpDelete("DeleteQueue")]
-        public int DeleteQueue(int queueNum)
+        public Object DeleteQueue(int queueNum,int hairSalonId)
         {
             Queue queue = new Queue();
-            return queue.DeleteQueue(queueNum);
+            return queue.DeleteQueue(queueNum, hairSalonId);
         }
     }
 }

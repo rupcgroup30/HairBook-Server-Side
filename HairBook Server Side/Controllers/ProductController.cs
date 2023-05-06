@@ -11,40 +11,40 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<ProductController>
         [HttpGet]
-        public List<Product> Get()
+        public List<Product> Get(int hairSalonId)
         {
             Product product = new Product();
-            return product.Read();
+            return product.Read(hairSalonId);
         }
 
         // GET api/<ProductController>/5
         [HttpGet("GetRelatedProds")]
-        public List<Product> Get(string seriesName)
+        public List<Product> Get(string seriesName,int hairSalonId)
         {
             Product product = new Product();
-            return product.ReadRelatedProducts(seriesName);
+            return product.ReadRelatedProducts(seriesName, hairSalonId);
         }
 
         // POST api/<ProductController>
         [HttpPost("InsertProduct")]
-        public int Post([FromBody] Product product)
+        public int Post([FromBody] Product product,int hairSalonId)
         {
-            return product.Insert();
+            return product.Insert(hairSalonId);
         }
 
         // PUT api/<ProductController>/5
         [HttpPut("UpdateNOrderProduct")]
-        public int Put(int id, string phoneNum, int amount, DateTime date)
+        public int Put(int id, string phoneNum, int amount, DateTime date,int hairSalonId)
         {
             Product product = new Product();
-            return product.UpdateNOrder(id, phoneNum, amount, date);
+            return product.UpdateNOrder(id, phoneNum, amount, date, hairSalonId);
         }
 
         [HttpPut("{id}/{amount}/{price}")]
-        public int Put(int id, int amount,float price)
+        public int Put(int id, int amount,float price,int hairSalonId)
         {
             Product product = new Product();
-            return product.UpdateProduct(id, amount,price);
+            return product.UpdateProduct(id, amount,price, hairSalonId);
         }
 
         //// DELETE api/<ProductController>/5

@@ -27,22 +27,22 @@ namespace HairBook_Server_Side.Models
         public int Break3 { get => break3; set => break3 = value; }
         public int TreatmentNum { get => treatmentNum; set => treatmentNum = value; }
 
-        public int Insert()
+        public int Insert(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertService(this);
+            return dbs.InsertService(this, hairSalonId);
         }
 
-        public List<Service> Read()
+        public List<Service> Read(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadService();
+            return dbs.ReadService(hairSalonId);
         }
 
-        public int UpdateService()
+        public int UpdateService(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateService(this);
+            return dbs.UpdateService(this, hairSalonId);
         }
     }
 }

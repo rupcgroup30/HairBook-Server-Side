@@ -19,26 +19,26 @@ namespace HairBook_Server_Side.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{phoneNum}")]
-        public Client Get(string phoneNum)
+        public Client Get(string phoneNum,int hairSalonId)
         {
             Client client= new Client();
-            return client.Read(phoneNum);
+            return client.Read(phoneNum, hairSalonId);
         }
 
         // GET api/<UserController>/5
         [HttpGet("GetCode")]
-        public int GetCode(string phoneNum)
+        public int GetCode(string phoneNum,int hairSalonId)
         {
             Client client = new Client();
-            return client.GetCode(phoneNum);
+            return client.GetCode(phoneNum, hairSalonId);
         }
 
 
         // POST api/<UserController>
         [HttpPost]
-        public int Post([FromBody] Client client)
+        public int Post([FromBody] Client client, int hairSalonId)
         {
-            return client.Insert();
+            return client.Insert(hairSalonId);
         }
 
         //// PUT api/<UserController>/5

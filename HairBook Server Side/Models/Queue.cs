@@ -20,40 +20,40 @@ namespace HairBook_Server_Side.Models
         public string Clientphone { get => clientphone; set => clientphone = value; }
         public int ServiceNum { get => serviceNum; set => serviceNum = value; }
 
-        public int InsertToWaitingList(Queue queue)
+        public int InsertToWaitingList(Queue queue,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertToWaitingList(this);
+            return dbs.InsertToWaitingList(this, hairSalonId);
         }
 
-        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date)
+        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadAvailableTimes(serviceNum, phoneNum, Date);
+            return dbs.ReadAvailableTimes(serviceNum, phoneNum, Date, hairSalonId);
         }
 
-        public int OrderQueue()
+        public int OrderQueue(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.OrderQueue(this);
+            return dbs.OrderQueue(this, hairSalonId);
         }
 
-        public List<string> ReadPhonesToRemind()
+        public List<string> ReadPhonesToRemind(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadPhonesToRemind();
+            return dbs.ReadPhonesToRemind(hairSalonId);
         }
 
-        public List<string> QueueReminder()
+        public List<string> QueueReminder(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.QueueReminder();
+            return dbs.QueueReminder(hairSalonId);
         }
 
-        public int DeleteQueue(int queueNum)
+        public Object DeleteQueue(int queueNum,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.DeleteQueue(queueNum);
+            return dbs.DeleteQueue(queueNum, hairSalonId);
         }
 
         

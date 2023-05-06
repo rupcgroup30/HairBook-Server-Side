@@ -19,40 +19,40 @@ namespace HairBook_Server_Side.Models
         public string Facebook { get => facebook; set => facebook = value; }
         public string Instagram { get => instagram; set => instagram = value; }
 
-        public int Insert(int colorNum, string colorName)
+        public int Insert(int hairSalonId,int colorNum, string colorName)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertHairColor(colorNum,colorName);
+            return dbs.InsertHairColor(colorNum,colorName,hairSalonId);
         }
 
-        public int InsertClientHairColor(string phoneNum, int colorNum)
+        public int InsertClientHairColor(string phoneNum, int colorNum, int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertClientHairColor(phoneNum,colorNum);
+            return dbs.InsertClientHairColor(phoneNum, colorNum, hairSalonId);
         }
 
-        public int InsertHairSalonInfo(string managerPhone, HairSalon hairSalonInfo)
+        public int InsertHairSalonInfo(int hairSalonId, HairSalon hairSalonInfo)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertHairSalonInfo(managerPhone,hairSalonInfo);
+            return dbs.InsertHairSalonInfo(hairSalonId,hairSalonInfo);
         }
 
-        public HairSalon ReadHairSalonInfo()
+        public HairSalon ReadHairSalonInfo(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadHairSalonInfo();
+            return dbs.ReadHairSalonInfo(hairSalonId);
         }
 
-        public int InsertHairSalonWorkTime(string managerPhone, string fromHour, string toHour, string day)
+        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, string day)
         {
             DBServices dbs = new DBServices();
-            return dbs.InsertHairSalonWorkTime(managerPhone, fromHour, toHour, day);
+            return dbs.InsertHairSalonWorkTime(hairSalonId, fromHour, toHour, day);
         }
 
-        public Object ReadHairSalonWorkTime()
+        public Object ReadHairSalonWorkTime(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadHairSalonWorkTime();
+            return dbs.ReadHairSalonWorkTime(hairSalonId);
         }
     }
 }

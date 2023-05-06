@@ -11,49 +11,49 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<EmployeeController>
         [HttpGet]
-        public Employee Get(string phoneNum, string password)
+        public Employee Get(string phoneNum, string password,int hairSalonId)
         {
             Employee emp = new Employee();
-            return emp.Read(phoneNum, password);
+            return emp.Read(phoneNum, password, hairSalonId);
         }
 
         // GET api/<EmployeeController>/5
         [HttpGet("GetAllEmployees")]
-        public List<Employee> GetAllEmployees()
+        public List<Employee> GetAllEmployees(int hairSalonId)
         {
             Employee emp = new Employee();
-            return emp.ReadAllEmp();
+            return emp.ReadAllEmp(hairSalonId);
         }
 
         // GET api/<EmployeeController>/5
         [HttpGet("GetDatesByEmployee")]
-        public Object GetDatesByEmployee(string EmpPhone)
+        public Object GetDatesByEmployee(string EmpPhone,int hairSalonId)
         {
             Employee emp = new Employee();
-            return emp.ReadDatesByEmployee(EmpPhone);
+            return emp.ReadDatesByEmployee(EmpPhone, hairSalonId);
         }
 
         // GET api/<EmployeeController>/5
         [HttpGet("GetByService")]
-        public Object GetByService(int service)
+        public Object GetByService(int service,int hairSalonId)
         {
             Employee emp = new Employee();
-            return emp.ReadByService(service);
+            return emp.ReadByService(service, hairSalonId);
         }
 
         // POST api/<EmployeeController>
         [HttpPost]
-        public int Post([FromBody] Employee employee)
+        public int Post([FromBody] Employee employee,int hairSalonId)
         {
-            return employee.Insert();
+            return employee.Insert(hairSalonId);
         }
 
         // PUT api/<EmployeeController>/5
         [HttpPut("UpdateEmployee")]
-        public int UpdateEmployee( string phoneNum,string password, string type,string isActive)
+        public int UpdateEmployee( string phoneNum,string password, string type,string isActive,int hairSalonId)
         {
             Employee emp = new Employee();
-            return emp.UpdateEmployee(phoneNum,password,type,isActive);
+            return emp.UpdateEmployee(phoneNum,password,type,isActive, hairSalonId);
         }
 
         //// DELETE api/<EmployeeController>/5

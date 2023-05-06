@@ -11,49 +11,49 @@ namespace HairBook_Server_Side.Controllers
     {
         // GET: api/<HairColorController>
         [HttpGet("GetHairSalonInfo")]
-        public HairSalon Get()
+        public HairSalon Get(int hairSalonId)
         {
             HairSalon hairSalon = new HairSalon();
-            return hairSalon.ReadHairSalonInfo();
+            return hairSalon.ReadHairSalonInfo(hairSalonId);
         }
 
         // GET api/<HairColorController>/5
         [HttpGet("GetHairSalonWorkTime")]
-        public Object ReadHairSalonWorkTime()
+        public Object ReadHairSalonWorkTime(int hairSalonId)
         {
             HairSalon hairSalon = new HairSalon();
-            return hairSalon.ReadHairSalonWorkTime();
+            return hairSalon.ReadHairSalonWorkTime(hairSalonId);
         }
 
         // POST api/<HairColorController>
         [HttpPost("PostSalonInfo")]
-        public int PostSalonInfo( string managerPhone,HairSalon hairSalonInfo)
+        public int PostSalonInfo(int hairSalonId, HairSalon hairSalonInfo)
         {
-            return hairSalonInfo.InsertHairSalonInfo(managerPhone, hairSalonInfo);
+            return hairSalonInfo.InsertHairSalonInfo(hairSalonId, hairSalonInfo);
         }
 
         // POST api/<HairColorController>
         [HttpPost("PostHairColor")]
-        public int PostHairColor( int colorNum, string colorName)
+        public int PostHairColor( int colorNum, string colorName, int hairSalonId)
         {
             HairSalon hairColor = new HairSalon();
-            return hairColor.Insert(colorNum,colorName);
+            return hairColor.Insert(hairSalonId, colorNum,colorName);
         }
 
                 // POST api/<HairColorController>
         [HttpPost("{phoneNum}/{colorNum}")]
-        public int PostClientHairColor( string phoneNum, int colorNum)
+        public int PostClientHairColor( string phoneNum, int colorNum, int hairSalonId)
         {
             HairSalon hairColor = new HairSalon();
-            return hairColor.InsertClientHairColor(phoneNum,colorNum);
+            return hairColor.InsertClientHairColor(phoneNum,colorNum, hairSalonId);
         }
 
         // POST api/<HairColorController>
         [HttpPost("PostWorkTime")]
-        public int InsertHairSalonWorkTime(string managerPhone, string fromHour, string toHour, string day)
+        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, string day)
         {
             HairSalon hairSalon = new HairSalon();
-            return hairSalon.InsertHairSalonWorkTime(managerPhone, fromHour, toHour, day);
+            return hairSalon.InsertHairSalonWorkTime(hairSalonId, fromHour, toHour, day);
         }
 
 
