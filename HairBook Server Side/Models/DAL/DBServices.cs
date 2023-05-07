@@ -333,7 +333,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read hair salon info SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateGetHairSalonWorkTimeCommandSP(String spName, SqlConnection con,int hairSalonId)
+        private SqlCommand CreateGetHairSalonWorkTimeCommandSP(String spName, SqlConnection con, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -422,6 +422,85 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+        public Object ReadHairColors(bool flag, int HairSalonId)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateGetHairColorsCommandSP("spGetHairColors", con, flag, HairSalonId);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+
+
+                List<Object> HairColors = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    HairColors.Add(new
+                    {
+                        ColorNum = Convert.ToInt32(dataReader["ColorNum"]),
+                        ColorName = (dataReader["ColorName"]).ToString(),
+                    });
+                }
+                return HairColors;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read hair colors info SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateGetHairColorsCommandSP(String spName, SqlConnection con, bool flag, int HairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@flag", flag);
+
+            cmd.Parameters.AddWithValue("@HairSalonId", HairSalonId);
+
+            return cmd;
+        }
+
 
 
         //--------------------------------------------------------------------------------------------------
@@ -577,7 +656,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Clients by Phone number
         //--------------------------------------------------------------------------------------------------
-        public int GetCode(string phoneNum,int hairSalonId)
+        public int GetCode(string phoneNum, int hairSalonId)
         {
 
             SqlConnection con;
@@ -637,7 +716,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Clients by Phone number
         //--------------------------------------------------------------------------------------------------
-        public Client ReadClient(string phoneNum,int hairSalonId)
+        public Client ReadClient(string phoneNum, int hairSalonId)
         {
 
             SqlConnection con;
@@ -697,7 +776,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Client SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadClientCommandSP(String spName, SqlConnection con, string phoneNum,int hairSalonId)
+        private SqlCommand CreateReadClientCommandSP(String spName, SqlConnection con, string phoneNum, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -719,9 +798,92 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //--------------------------------------------------------------------------------------------------
+        // This method read all Clients by Phone number
+        //--------------------------------------------------------------------------------------------------
+        public List<Client> ReadAllClients(int hairSalonId)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadAllClientCommandSP("spGetAllClients", con, hairSalonId);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+
+
+                List<Client> clients = new List<Client>();
+                while (dataReader.Read())
+                {
+                    Client client = new Client();
+                    client.FirstName = dataReader["firstName"].ToString();
+                    client.LastName = dataReader["lastName"].ToString();
+                    client.PhoneNum = dataReader["phoneNum"].ToString();
+                    client.BirthDate = ((DateTime)dataReader["birthDate"]);
+                    client.Image = dataReader["image"].ToString();
+                    client.Gender = dataReader["gender"].ToString();
+                    clients.Add(client);
+                }
+                return clients;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read all Client SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadAllClientCommandSP(String spName, SqlConnection con, int hairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            return cmd;
+        }
+
+
+        //--------------------------------------------------------------------------------------------------
         // This method inserts a Employee to the Employee table 
         //--------------------------------------------------------------------------------------------------
-        public int InsertEmployee(Employee employee,int hairSalonId)
+        public int InsertEmployee(Employee employee, int hairSalonId)
         {
 
             SqlConnection con;
@@ -806,7 +968,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Employee by Phone number and Password
         //--------------------------------------------------------------------------------------------------
-        public Employee ReadEmployee(string phoneNum, string password,int hairSalonId)
+        public Employee ReadEmployee(string phoneNum, string password, int hairSalonId)
         {
 
             SqlConnection con;
@@ -866,7 +1028,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Employee SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadEmployeeCommandSP(String spName, SqlConnection con, string phoneNum, string password,int hairSalonId)
+        private SqlCommand CreateReadEmployeeCommandSP(String spName, SqlConnection con, string phoneNum, string password, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -908,7 +1070,7 @@ namespace HairBook_Server_Side.Models.DAL
                 throw new Exception(ex.Message);
             }
 
-            cmd = CreateUpdateEmployeeCommandWithStoredProcedure("spUpdateEmployee", con, phoneNum,password,type,isActive, hairSalonId);// create the command
+            cmd = CreateUpdateEmployeeCommandWithStoredProcedure("spUpdateEmployee", con, phoneNum, password, type, isActive, hairSalonId);// create the command
 
             try
             {
@@ -1029,7 +1191,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Employee SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadAllEmployeesCommandSP(String spName, SqlConnection con,int hairSalonId)
+        private SqlCommand CreateReadAllEmployeesCommandSP(String spName, SqlConnection con, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1046,6 +1208,85 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method inserts a Employee vacation to the Employee vacation table 
+        //--------------------------------------------------------------------------------------------------
+        public int InsertEmployeeVacation(int hairSalonId,string phoneNum, DateTime startDate,DateTime endDate,string fromHour,string toHour)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateInsertEmployeeVacationCommandWithStoredProcedure("spInsertEmpVaction", con, hairSalonId, phoneNum, startDate, endDate, fromHour, toHour);// create the command
+
+            try
+            {
+                int numEffected = cmd.ExecuteNonQuery(); // execute the command
+                return numEffected;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Employee vacation SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateInsertEmployeeVacationCommandWithStoredProcedure(String spName, SqlConnection con, int hairSalonId, string phoneNum, DateTime startDate, DateTime endDate, string fromHour, string toHour)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            cmd.Parameters.AddWithValue("@empPhone", phoneNum);
+
+            cmd.Parameters.AddWithValue("@fromHour", fromHour);
+
+            cmd.Parameters.AddWithValue("@toHour", toHour);
+
+            return cmd;
+        }
+
+
 
 
 
@@ -1096,7 +1337,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the insert Product SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateInsertProductCommandWithStoredProcedure(String spName, SqlConnection con, Product product,int hairSalonId)
+        private SqlCommand CreateInsertProductCommandWithStoredProcedure(String spName, SqlConnection con, Product product, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1196,7 +1437,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read products SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadProductsCommandSP(String spName, SqlConnection con,int hairSalonId)
+        private SqlCommand CreateReadProductsCommandSP(String spName, SqlConnection con, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1278,7 +1519,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Related products SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadRelatedProductsCommandSP(String spName, SqlConnection con, string seriesName,int hairSalonId)
+        private SqlCommand CreateReadRelatedProductsCommandSP(String spName, SqlConnection con, string seriesName, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1303,7 +1544,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method inserts a Treatment to the Treatment table 
         //--------------------------------------------------------------------------------------------------
-        public int InsertService(Service service,int hairSalonId)
+        public int InsertService(Service service, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1347,7 +1588,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the insert Service SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateInsertServiceCommandWithStoredProcedure(String spName, SqlConnection con, Service service,int hairSalonId)
+        private SqlCommand CreateInsertServiceCommandWithStoredProcedure(String spName, SqlConnection con, Service service, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1387,7 +1628,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method inserts a Treatment to the Treatment table 
         //--------------------------------------------------------------------------------------------------
-        public int UpdateService(Service service,int hairSalonId)
+        public int UpdateService(Service service, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1431,7 +1672,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the insert Service SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateServiceCommandWithStoredProcedure(String spName, SqlConnection con, Service service,int hairSalonId)
+        private SqlCommand CreateUpdateServiceCommandWithStoredProcedure(String spName, SqlConnection con, Service service, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1532,7 +1773,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read service SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadServiceCommandSP(String spName, SqlConnection con,int hairSalonId)
+        private SqlCommand CreateReadServiceCommandSP(String spName, SqlConnection con, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1554,7 +1795,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method update a product in the product table and  inserts a product to the OrderProduct table 
         //--------------------------------------------------------------------------------------------------
-        public int UpdateNOrdetProduct(int id, string phoneNum, int amount, DateTime date,int hairSalonId)
+        public int UpdateNOrdetProduct(int id, string phoneNum, int amount, DateTime date, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1599,7 +1840,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the order Product SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateNOrderProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date,int hairSalonId)
+        private SqlCommand CreateUpdateNOrderProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, string phoneNum, int amount, DateTime date, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1629,7 +1870,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method update a product in the product table and  inserts a product to the OrderProduct table 
         //--------------------------------------------------------------------------------------------------
-        public int UpdateProduct(int id, int amount,float price,int hairSalonId)
+        public int UpdateProduct(int id, int amount, float price, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1645,7 +1886,7 @@ namespace HairBook_Server_Side.Models.DAL
                 throw new Exception(ex.Message);
             }
 
-            cmd = CreateUpdateProductCommandWithStoredProcedure("UpdateProduct", con, id, amount,price, hairSalonId);// create the command
+            cmd = CreateUpdateProductCommandWithStoredProcedure("UpdateProduct", con, id, amount, price, hairSalonId);// create the command
 
             try
             {
@@ -1673,7 +1914,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the update Product SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateUpdateProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount,float price,int hairSalonId)
+        private SqlCommand CreateUpdateProductCommandWithStoredProcedure(String spName, SqlConnection con, int id, int amount, float price, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1701,7 +1942,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Employee by service
         //--------------------------------------------------------------------------------------------------
-        public Object ReadByService(int service,int hairSalonId)
+        public Object ReadByService(int service, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1757,7 +1998,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Employee by service SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadEmployeeByServiceCommandSP(String spName, SqlConnection con, int service,int hairSalonId)
+        private SqlCommand CreateReadEmployeeByServiceCommandSP(String spName, SqlConnection con, int service, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1782,7 +2023,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Available dates by employee
         //--------------------------------------------------------------------------------------------------
-        public Object ReadDatesByEmployee(string EmpPhone,int hairSalonId)
+        public Object ReadDatesByEmployee(string EmpPhone, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1812,7 +2053,7 @@ namespace HairBook_Server_Side.Models.DAL
                     {
                         startDate = (DateTime)dataReader["startDate"],
                         endDate = (DateTime)dataReader["endDate"],
-                       // dayOfWeek = dataReader["DayOfWeek"].ToString()
+                        // dayOfWeek = dataReader["DayOfWeek"].ToString()
                     });
                 }
                 return Dates;
@@ -1837,7 +2078,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Available Dates by Employee SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadDateByEmployeeCommandSP(String spName, SqlConnection con, string EmpPhone,int hairSalonId)
+        private SqlCommand CreateReadDateByEmployeeCommandSP(String spName, SqlConnection con, string EmpPhone, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1860,7 +2101,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method read Available times by employee,service and date
         //--------------------------------------------------------------------------------------------------
-        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date,int hairSalonId)
+        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1882,7 +2123,7 @@ namespace HairBook_Server_Side.Models.DAL
             {
                 SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
 
-                List<TimeSpan> Times =new  List<TimeSpan>();
+                List<TimeSpan> Times = new List<TimeSpan>();
                 //int count = 1;
 
                 while (dataReader.Read())
@@ -1914,7 +2155,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the Read Available times by employee,service and date SqlCommand
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateReadAvailableTimesCommandSP(String spName, SqlConnection con, int serviceNum, string phoneNum, DateTime Date,int hairSalonId)
+        private SqlCommand CreateReadAvailableTimesCommandSP(String spName, SqlConnection con, int serviceNum, string phoneNum, DateTime Date, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -1942,7 +2183,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method Order queue in the QueueClient table and  inserts a queue to the OrderQueue table 
         //--------------------------------------------------------------------------------------------------
-        public int OrderQueue(Queue queue,int hairSalonId)
+        public int OrderQueue(Queue queue, int hairSalonId)
         {
 
             SqlConnection con;
@@ -1987,7 +2228,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the order Queue SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateOrderQueueCommandWithStoredProcedure(String spName, SqlConnection con, Queue queue,int hairSalonId)
+        private SqlCommand CreateOrderQueueCommandWithStoredProcedure(String spName, SqlConnection con, Queue queue, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -2017,11 +2258,95 @@ namespace HairBook_Server_Side.Models.DAL
 
 
 
+        //--------------------------------------------------------------------------------------------------
+        // This method read all future Queues 
+        //--------------------------------------------------------------------------------------------------
+        public Object GetFutureQueues(int hairSalonId, string phoneNum)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateGetFutureQueuesCommandSP("spGetFutureQueues", con, phoneNum, hairSalonId);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<Object> queues = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    queues.Add(new
+                    {
+                        Date = (DateTime)dataReader["Date"],
+                        StartTime = (TimeSpan)dataReader["StartTime"],
+                        EndTime = (TimeSpan)dataReader["EndTime"],
+                        Price = Convert.ToDouble(dataReader["Price"]),
+                        FullName = dataReader["fullName"].ToString(),
+                        PhoneNum = dataReader["phoneNum"].ToString(),
+                        KindCare = dataReader["KindCare"].ToString()
+                    });
+                }
+                return queues;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Future Queues and date SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateGetFutureQueuesCommandSP(String spName, SqlConnection con, string phoneNum, int hairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            cmd.Parameters.AddWithValue("@phoneNumber", phoneNum);
+
+            return cmd;
+        }
+
+
+
 
         //--------------------------------------------------------------------------------------------------
         // This method inserts a Waitingqueue to the Waiting table 
         //--------------------------------------------------------------------------------------------------
-        public int InsertToWaitingList(Queue queue,int hairSalonId)
+        public int InsertToWaitingList(Queue queue, int hairSalonId)
         {
 
             SqlConnection con;
@@ -2064,7 +2389,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the insert Service SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateInsertToWaitingListCommandWithStoredProcedure(String spName, SqlConnection con, Queue queue,int hairSalonId)
+        private SqlCommand CreateInsertToWaitingListCommandWithStoredProcedure(String spName, SqlConnection con, Queue queue, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object
@@ -2220,7 +2545,7 @@ namespace HairBook_Server_Side.Models.DAL
         //--------------------------------------------------------------------------------------------------
         // This method delete queue to the Waiting table 
         //--------------------------------------------------------------------------------------------------
-        public Object DeleteQueue(int queueNum,int hairSalonId)
+        public Object DeleteQueue(int queueNum, int hairSalonId)
         {
 
             SqlConnection con;
@@ -2254,10 +2579,10 @@ namespace HairBook_Server_Side.Models.DAL
                 }
                 if (queue.Clientphone != null)
                 {
-                    int conformNum=OrderQueue(queue, hairSalonId);
-                    return (new { clientPhone = queue.Clientphone,conformNum= conformNum });
+                    int conformNum = OrderQueue(queue, hairSalonId);
+                    return (new { clientPhone = queue.Clientphone, conformNum = conformNum });
                 }
-                return (new{ clientPhone= queue.Clientphone});
+                return (new { clientPhone = queue.Clientphone });
             }
             catch (Exception ex)
             {
@@ -2280,7 +2605,7 @@ namespace HairBook_Server_Side.Models.DAL
         //---------------------------------------------------------------------------------
         // Create the insert Service SqlCommand using a stored procedure
         //---------------------------------------------------------------------------------
-        private SqlCommand CreateDeleteQueueCommandWithStoredProcedure(String spName, SqlConnection con, int queueNum,int hairSalonId)
+        private SqlCommand CreateDeleteQueueCommandWithStoredProcedure(String spName, SqlConnection con, int queueNum, int hairSalonId)
         {
 
             SqlCommand cmd = new SqlCommand(); // create the command object

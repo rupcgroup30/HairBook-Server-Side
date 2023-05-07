@@ -10,6 +10,15 @@ namespace HairBook_Server_Side.Controllers
     public class QueueController : ControllerBase
     {
         // GET: api/<QueueController>
+        [HttpGet("GetFutureQueues")]
+        public Object GetFutureQueues(int hairSalonId, string phoneNum)
+        {
+            Queue queue = new Queue();
+            return queue.GetFutureQueues(hairSalonId, phoneNum);
+        }
+
+
+        // GET: api/<QueueController>
         [HttpGet("GetAvailableTimes")]
         public List<TimeSpan> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date, int hairSalonId)
         {

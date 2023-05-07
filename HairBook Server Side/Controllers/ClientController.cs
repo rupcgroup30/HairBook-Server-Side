@@ -18,11 +18,18 @@ namespace HairBook_Server_Side.Controllers
         //}
 
         // GET api/<UserController>/5
-        [HttpGet("{phoneNum}")]
+        [HttpGet("{phoneNum}/{hairSalonId}")]
         public Client Get(string phoneNum,int hairSalonId)
         {
             Client client= new Client();
             return client.Read(phoneNum, hairSalonId);
+        }
+
+        [HttpGet("GetAllClients/{hairSalonId}")]
+        public List<Client> GetAllClients(int hairSalonId)
+        {
+            Client client = new Client();
+            return client.ReadAllClients(hairSalonId);
         }
 
         // GET api/<UserController>/5

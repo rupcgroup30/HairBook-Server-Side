@@ -25,6 +25,16 @@ namespace HairBook_Server_Side.Controllers
             return hairSalon.ReadHairSalonWorkTime(hairSalonId);
         }
 
+
+        [HttpGet("GetHairColors/{flag}/{HairSalonId}")]
+        public Object ReadHairColors(bool flag, int HairSalonId)
+        {
+            {
+                HairSalon hairSalon = new HairSalon();
+                return hairSalon.ReadHairColors(flag,HairSalonId);
+            }
+        }
+
         // POST api/<HairColorController>
         [HttpPost("PostSalonInfo")]
         public int PostSalonInfo(int hairSalonId, HairSalon hairSalonInfo)

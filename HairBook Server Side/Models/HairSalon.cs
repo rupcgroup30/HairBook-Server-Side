@@ -54,5 +54,11 @@ namespace HairBook_Server_Side.Models
             DBServices dbs = new DBServices();
             return dbs.ReadHairSalonWorkTime(hairSalonId);
         }
+
+        public Object ReadHairColors(bool flag, int HairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadHairColors(flag, HairSalonId);
+        }
     }
 }

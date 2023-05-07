@@ -48,6 +48,14 @@ namespace HairBook_Server_Side.Controllers
             return employee.Insert(hairSalonId);
         }
 
+        // POST api/<EmployeeController>
+        [HttpPost("InsertEmployeeVacation")]
+        public int InsertEmployeeVacation(int hairSalonId, string phoneNum, DateTime startDate, DateTime endDate, string fromHour, string toHour)
+        {
+            Employee emp = new Employee();
+            return emp.InsertEmployeeVacation(hairSalonId, phoneNum, startDate, endDate, fromHour, toHour);
+        }
+
         // PUT api/<EmployeeController>/5
         [HttpPut("UpdateEmployee")]
         public int UpdateEmployee( string phoneNum,string password, string type,string isActive,int hairSalonId)

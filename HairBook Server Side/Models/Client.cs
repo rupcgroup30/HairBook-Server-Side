@@ -22,6 +22,12 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadClient(phoneNum, hairSalonId);
         }
 
+        public List<Client> ReadAllClients(int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadAllClients(hairSalonId);
+        }
+
         public int GetCode(string phoneNum, int hairSalonId)
         {
             DBServices dbs = new DBServices();

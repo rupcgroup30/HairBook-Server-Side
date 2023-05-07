@@ -20,6 +20,13 @@ namespace HairBook_Server_Side.Models
         public string Clientphone { get => clientphone; set => clientphone = value; }
         public int ServiceNum { get => serviceNum; set => serviceNum = value; }
 
+
+        public Object GetFutureQueues(int hairSalonId, string phoneNum)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.GetFutureQueues(hairSalonId, phoneNum);
+        }
+
         public int InsertToWaitingList(Queue queue,int hairSalonId)
         {
             DBServices dbs = new DBServices();

@@ -24,6 +24,12 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertEmployee(this, hairSalonId);
         }
 
+        public int InsertEmployeeVacation(int hairSalonId, string phoneNum, DateTime startDate, DateTime endDate, string fromHour, string toHour)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.InsertEmployeeVacation(hairSalonId, phoneNum, startDate, endDate, fromHour, toHour);
+        }
+
         public Employee Read(string phoneNum, string password,int hairSalonId)
         {
             DBServices dbs = new DBServices();
