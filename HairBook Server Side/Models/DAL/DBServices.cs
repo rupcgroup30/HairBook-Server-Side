@@ -43,6 +43,86 @@ namespace HairBook_Server_Side.Models.DAL
 
 
         //--------------------------------------------------------------------------------------------------
+        // This method read hair salon info by Phone number
+        //--------------------------------------------------------------------------------------------------
+        public Object ReadAllHairSalon()
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadAllHairSalonCommandSP("spGetAllHairSalons", con);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+
+
+                List<Object> hairSalons = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    hairSalons.Add(new
+                    {
+                    SalonName = dataReader["SalonName"].ToString(),
+                    Id = Convert.ToInt32(dataReader["HairSalonId"])
+                });
+                }
+                return hairSalons;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read hair salon info SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadAllHairSalonCommandSP(String spName, SqlConnection con)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            return cmd;
+        }
+
+
+
+
+        //--------------------------------------------------------------------------------------------------
         // This method inserts a Hair Salon Info to the HairSalon table 
         //--------------------------------------------------------------------------------------------------
         public int InsertHairSalonInfo(int hairSalonId, HairSalon hairSalonInfo)
@@ -772,7 +852,6 @@ namespace HairBook_Server_Side.Models.DAL
         }
 
 
-
         //---------------------------------------------------------------------------------
         // Create the Read Client SqlCommand
         //---------------------------------------------------------------------------------
@@ -795,6 +874,85 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method read Client hair color by Phone number
+        //--------------------------------------------------------------------------------------------------
+        public int ReadClientHairColor(string phoneNum, int hairSalonId)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadClientHairColorCommandSP("spGetClientColor", con, phoneNum, hairSalonId);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+
+
+
+                int colorNum = 0;
+
+                while (dataReader.Read())
+                {
+                    colorNum = Convert.ToInt32(dataReader["ColorNum"]);
+                }
+                return colorNum;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the Read Client SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadClientHairColorCommandSP(String spName, SqlConnection con, string phoneNum, int hairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@phoneNum", phoneNum);
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            return cmd;
+        }
+
 
 
         //--------------------------------------------------------------------------------------------------
@@ -855,8 +1013,6 @@ namespace HairBook_Server_Side.Models.DAL
             }
 
         }
-
-
 
         //---------------------------------------------------------------------------------
         // Create the Read all Client SqlCommand
@@ -1285,9 +1441,6 @@ namespace HairBook_Server_Side.Models.DAL
 
             return cmd;
         }
-
-
-
 
 
         //--------------------------------------------------------------------------------------------------
@@ -2018,6 +2171,81 @@ namespace HairBook_Server_Side.Models.DAL
             return cmd;
         }
 
+        //--------------------------------------------------------------------------------------------------
+        // This method read employees vacations
+        //--------------------------------------------------------------------------------------------------
+        public Object ReadEmployeesVacations( int hairSalonId)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadEmployeesVacationsCommandSP("spGetEmployeesVacations", con, hairSalonId);
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<Object> vacations = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    vacations.Add(new
+                    {
+                        phoneNum= dataReader["startDate"].ToString(),
+                        startDate = (DateTime)dataReader["startDate"],
+                        endDate = (DateTime)dataReader["endDate"],
+                    });
+                }
+                return vacations;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+        //---------------------------------------------------------------------------------
+        // Create the Read all Employee vacations SqlCommand
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadEmployeesVacationsCommandSP(String spName, SqlConnection con, int hairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            return cmd;
+        }
 
 
         //--------------------------------------------------------------------------------------------------

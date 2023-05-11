@@ -4,7 +4,7 @@ namespace HairBook_Server_Side.Models
 {
     public class HairSalon
     {
-
+        private int _id;
         private string salonName;
         private string salonPhoneNum;
         private string address;
@@ -18,11 +18,18 @@ namespace HairBook_Server_Side.Models
         public string City { get => city; set => city = value; }
         public string Facebook { get => facebook; set => facebook = value; }
         public string Instagram { get => instagram; set => instagram = value; }
+        public int Id { get => _id; set => _id = value; }
 
         public int Insert(int hairSalonId,int colorNum, string colorName)
         {
             DBServices dbs = new DBServices();
             return dbs.InsertHairColor(colorNum,colorName,hairSalonId);
+        }
+
+        public Object ReadAllHairSalon()
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadAllHairSalon();
         }
 
         public int InsertClientHairColor(string phoneNum, int colorNum, int hairSalonId)

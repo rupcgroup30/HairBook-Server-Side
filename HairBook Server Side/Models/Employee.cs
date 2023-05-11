@@ -30,16 +30,22 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertEmployeeVacation(hairSalonId, phoneNum, startDate, endDate, fromHour, toHour);
         }
 
-        public Employee Read(string phoneNum, string password,int hairSalonId)
+        public Object ReadEmployeesVacations(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.ReadEmployee(phoneNum,password, hairSalonId);
+            return dbs.ReadEmployeesVacations(hairSalonId);
+        }
+
+        public Employee Read(string phoneNum, string password, int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadEmployee(phoneNum, password, hairSalonId);
         }
 
         public int UpdateEmployee(string phoneNum, string password, string type, string isActive, int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateEmployee(phoneNum,password,type,isActive, hairSalonId);
+            return dbs.UpdateEmployee(phoneNum, password, type, isActive, hairSalonId);
         }
 
 
@@ -49,14 +55,14 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadAllEmployees(hairSalonId);
         }
 
-        public Object ReadByService(int service,int hairSalonId)
+        public Object ReadByService(int service, int hairSalonId)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadByService(service, hairSalonId);
-        
-       }
 
-        public Object ReadDatesByEmployee(string EmpPhone,int hairSalonId)
+        }
+
+        public Object ReadDatesByEmployee(string EmpPhone, int hairSalonId)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadDatesByEmployee(EmpPhone, hairSalonId);

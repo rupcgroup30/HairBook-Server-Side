@@ -17,6 +17,13 @@ namespace HairBook_Server_Side.Controllers
             return hairSalon.ReadHairSalonInfo(hairSalonId);
         }
 
+        [HttpGet("GetAllHairSalons")]
+        public Object ReadAllHairSalon()
+        {
+            HairSalon hairSalon = new HairSalon();
+            return hairSalon.ReadAllHairSalon();
+        }
+
         // GET api/<HairColorController>/5
         [HttpGet("GetHairSalonWorkTime")]
         public Object ReadHairSalonWorkTime(int hairSalonId)

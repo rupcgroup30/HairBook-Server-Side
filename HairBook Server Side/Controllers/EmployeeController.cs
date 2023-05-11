@@ -48,6 +48,13 @@ namespace HairBook_Server_Side.Controllers
             return employee.Insert(hairSalonId);
         }
 
+        [HttpGet("GetEmployeesVacations/{hairSalonId}")]
+        public Object ReadEmployeesVacations(int hairSalonId)
+        {
+            Employee emp = new Employee();
+            return emp.ReadEmployeesVacations( hairSalonId);
+        }
+
         // POST api/<EmployeeController>
         [HttpPost("InsertEmployeeVacation")]
         public int InsertEmployeeVacation(int hairSalonId, string phoneNum, DateTime startDate, DateTime endDate, string fromHour, string toHour)

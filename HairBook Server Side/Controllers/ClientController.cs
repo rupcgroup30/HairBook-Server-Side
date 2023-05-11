@@ -25,6 +25,13 @@ namespace HairBook_Server_Side.Controllers
             return client.Read(phoneNum, hairSalonId);
         }
 
+        [HttpGet("ReadClientHairColor/{phoneNum}/{hairSalonId}")]
+        public int ReadClientHairColor(string phoneNum, int hairSalonId)
+        {
+            Client client = new Client();
+            return client.ReadClientHairColor(phoneNum, hairSalonId);
+        }
+
         [HttpGet("GetAllClients/{hairSalonId}")]
         public List<Client> GetAllClients(int hairSalonId)
         {
