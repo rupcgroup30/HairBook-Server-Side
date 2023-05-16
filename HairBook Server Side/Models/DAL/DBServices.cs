@@ -2202,7 +2202,7 @@ namespace HairBook_Server_Side.Models.DAL
                 {
                     vacations.Add(new
                     {
-                        phoneNum= dataReader["startDate"].ToString(),
+                        phoneNum= dataReader["phoneNum"].ToString(),
                         startDate = (DateTime)dataReader["startDate"],
                         endDate = (DateTime)dataReader["endDate"],
                     });
@@ -2768,6 +2768,122 @@ namespace HairBook_Server_Side.Models.DAL
             }
 
         }
+
+
+        //--------------------------------------------------------------------------------------------------
+        // This method Reads a Client phones to remind client to order a queue 
+        //--------------------------------------------------------------------------------------------------
+        public Object createTender(int hairSalonId)
+        {
+
+            SqlConnection con;
+            SqlCommand cmd;
+
+            try
+            {
+                con = connect("myProjDB"); // create the connection
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            cmd = CreateReadPhonesToCreateTenderCommandWithStoredProcedure("spGetTodayWaitingList", con, hairSalonId);// create the command
+
+            try
+            {
+                SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                List<Object> waiting = new List<Object>();
+
+                while (dataReader.Read())
+                {
+                    waiting.Add(new
+                    {
+                        phoneNum = dataReader["phoneNum"].ToString(),
+                        Time= dataReader["Time"].ToString(),
+                        NumOfCare = Convert.ToInt32(dataReader["NumOfCare"]),
+                        KindCare = dataReader["KindCare"].ToString(),
+                        Price = Convert.ToDouble(dataReader["Price"]),
+                        MinPrice = Convert.ToDouble(dataReader["MinPrice"])
+                });
+                }
+                if(waiting.Count > 0)
+                {
+                    List<Object> Clients = new List<Object>();
+                    foreach (var item in waiting)
+                    {
+                        SqlCommand cmd2 = CreateReadAvailableTimesCommandSP("spGetAvailableTimes", con, (int)item.GetType().GetProperty("NumOfCare").GetValue(item), null, DateTime.Today, hairSalonId); // create the command
+                        TimeSpan time= TimeSpan.Zero;
+                        int timeDiff = 1000;
+                        while (dataReader.Read())
+                        {
+                            if(time== TimeSpan.Zero)
+                            {
+                                time = (TimeSpan)dataReader["TimeValue"];
+                            }
+                            else if(timeDiff> Math.Abs((time- (TimeSpan)dataReader["TimeValue"]).TotalMinutes))
+                            {
+                                timeDiff = Math.Abs((int)((time - (TimeSpan)dataReader["TimeValue"]).TotalMinutes));
+                                time = (TimeSpan)dataReader["TimeValue"];
+                            }
+                        }
+                        if(time!= TimeSpan.Zero)
+                        {
+                            Clients.Add(new
+                            {
+                                careKind = dataReader["KindCare"].ToString(),
+                                phoneNum = dataReader["phoneNum"].ToString(),
+                                Time = time,
+                                Price = Convert.ToDouble(dataReader["Price"]),
+                                minPrice = Convert.ToDouble(dataReader["MinPrice"])
+                            });
+                        }
+                    }
+                    return Clients;
+                }
+                else return null;
+            }
+            catch (Exception ex)
+            {
+                // write to log
+                throw new Exception(ex.Message);
+            }
+
+            finally
+            {
+                if (con != null)
+                {
+                    // close the db connection
+                    con.Close();
+                }
+            }
+
+        }
+
+
+        //---------------------------------------------------------------------------------
+        // Create the insert Employee SqlCommand using a stored procedure
+        //---------------------------------------------------------------------------------
+        private SqlCommand CreateReadPhonesToCreateTenderCommandWithStoredProcedure(String spName, SqlConnection con, int hairSalonId)
+        {
+
+            SqlCommand cmd = new SqlCommand(); // create the command object
+
+            cmd.Connection = con;              // assign the connection to the command object
+
+            cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+            cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+            cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be stored procedure
+
+            cmd.Parameters.AddWithValue("@hairSalonId", hairSalonId);
+
+            return cmd;
+        }
+
 
 
         //--------------------------------------------------------------------------------------------------

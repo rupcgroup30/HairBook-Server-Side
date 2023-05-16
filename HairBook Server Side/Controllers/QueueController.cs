@@ -34,6 +34,14 @@ namespace HairBook_Server_Side.Controllers
             return queue.ReadPhonesToRemind(hairSalonId);
         }
 
+        [HttpGet("/createTender/{hairSalonId}")]
+        public Object createTender(int hairSalonId)
+        {
+            Queue queue = new Queue();
+            return queue.createTender(hairSalonId);
+        }
+
+
         // GET api/<QueueController>/5
         [HttpGet("/TommorowQueueReminder")]
         public List<string> QueueReminder(int hairSalonId)

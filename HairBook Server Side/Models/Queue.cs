@@ -57,6 +57,13 @@ namespace HairBook_Server_Side.Models
             return dbs.QueueReminder(hairSalonId);
         }
 
+
+        public Object createTender(int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.createTender(hairSalonId);
+        }
+
         public Object DeleteQueue(int queueNum,int hairSalonId)
         {
             DBServices dbs = new DBServices();
