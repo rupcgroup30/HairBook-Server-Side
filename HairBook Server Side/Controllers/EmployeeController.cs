@@ -71,6 +71,14 @@ namespace HairBook_Server_Side.Controllers
             return emp.UpdateEmployee(phoneNum,password,type,isActive, hairSalonId);
         }
 
+        // PUT api/<EmployeeController>/5
+        [HttpPut("UpdateEmployeeRank")]
+        public int UpdateEmployeeRank(double rank, int employeeNum)
+        {
+            Employee emp = new Employee();
+            return emp.UpdateEmployeeRank(rank,employeeNum);
+        }
+
         //// DELETE api/<EmployeeController>/5
         //[HttpDelete("{phoneNum}")]
         //public int Delete(string phoneNum)

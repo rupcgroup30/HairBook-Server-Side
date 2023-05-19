@@ -11,20 +11,23 @@ namespace HairBook_Server_Side.Models
         private string clientphone;
         private int serviceNum;
 
-
-        private static List<Queue> QueuesList = new List<Queue>();
-
         public DateTime Date { get => date; set => date = value; }
         public string Time { get => time; set => time = value; }
         public string EmpPhone { get => empPhone; set => empPhone = value; }
         public string Clientphone { get => clientphone; set => clientphone = value; }
         public int ServiceNum { get => serviceNum; set => serviceNum = value; }
+        public int QueueNum { get => queueNum; set => queueNum = value; }
 
-
-        public Object GetFutureQueues(int hairSalonId, string phoneNum)
+        public Object GetQueuesByClient(int hairSalonId, string phoneNum,int flag)
         {
             DBServices dbs = new DBServices();
-            return dbs.GetFutureQueues(hairSalonId, phoneNum);
+            return dbs.GetQueuesByClient(hairSalonId, phoneNum,flag);
+        }
+
+        public Object GetAllQueues(int hairSalonId, int flag)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.GetAllQueues(hairSalonId, flag);
         }
 
         public int InsertToWaitingList(Queue queue,int hairSalonId)
@@ -44,6 +47,15 @@ namespace HairBook_Server_Side.Models
             DBServices dbs = new DBServices();
             return dbs.OrderQueue(this, hairSalonId);
         }
+        public Object MoveQueue(int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            int res= dbs.OrderQueue(this, hairSalonId);
+            if (res !=0)
+                return dbs.DeleteQueue(this.QueueNum, hairSalonId);
+            else
+                return 0;
+        }
 
         public List<string> ReadPhonesToRemind(int hairSalonId)
         {
@@ -61,7 +73,8 @@ namespace HairBook_Server_Side.Models
         public Object createTender(int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.createTender(hairSalonId);
+            return dbs.GetTodayWaiting(hairSalonId);
+           // return dbs.createTender(waiting);
         }
 
         public Object DeleteQueue(int queueNum,int hairSalonId)

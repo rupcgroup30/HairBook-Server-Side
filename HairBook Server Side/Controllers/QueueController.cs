@@ -10,11 +10,19 @@ namespace HairBook_Server_Side.Controllers
     public class QueueController : ControllerBase
     {
         // GET: api/<QueueController>
-        [HttpGet("GetFutureQueues")]
-        public Object GetFutureQueues(int hairSalonId, string phoneNum)
+        [HttpGet("GetQueuesByClient")]
+        public Object GetQueuesByClient(int hairSalonId, string phoneNum, int flag)
         {
             Queue queue = new Queue();
-            return queue.GetFutureQueues(hairSalonId, phoneNum);
+            return queue.GetQueuesByClient(hairSalonId, phoneNum,flag);
+        }
+
+        // GET: api/<QueueController>
+        [HttpGet("GetAllQueues")]
+        public Object GetAllQueues(int hairSalonId, int flag)
+        {
+            Queue queue = new Queue();
+            return queue.GetAllQueues(hairSalonId, flag);
         }
 
 
@@ -62,6 +70,13 @@ namespace HairBook_Server_Side.Controllers
         public int PostIntoWaiting([FromBody] Queue queue,int hairSalonId)
         {
             return queue.InsertToWaitingList(queue, hairSalonId);
+        }
+
+        // POST api/<QueueController>
+        [HttpPost("MoveQueue")]
+        public Object MoveQueue([FromBody] Queue queue, int hairSalonId)
+        {
+            return queue.MoveQueue(hairSalonId);
         }
 
         //// PUT api/<QueueController>/5
