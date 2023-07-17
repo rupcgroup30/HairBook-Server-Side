@@ -5,6 +5,7 @@ C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.deps.json
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.runtimeconfig.json
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\HairBook Server Side.pdb
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Expo.Server.SDK.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Configuration.Binder.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll

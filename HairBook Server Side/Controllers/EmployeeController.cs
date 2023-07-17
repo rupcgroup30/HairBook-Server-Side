@@ -1,5 +1,9 @@
 ﻿using HairBook_Server_Side.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,6 +60,14 @@ namespace HairBook_Server_Side.Controllers
         }
 
         // POST api/<EmployeeController>
+        [HttpPost("SetEmpSpecialize")]
+        public int SetEmpSpecialize(int hairSalonId, string phoneNum, string numOfCare)
+        {
+            Employee emp = new Employee();
+            numOfCare = numOfCare.Trim('\"');
+            return emp.SetEmpSpecialize(hairSalonId, phoneNum, JsonConvert.DeserializeObject<List<string>>(numOfCare));
+        }
+
         [HttpPost("InsertEmployeeVacation")]
         public int InsertEmployeeVacation(int hairSalonId, string phoneNum, DateTime startDate, DateTime endDate, string fromHour, string toHour)
         {

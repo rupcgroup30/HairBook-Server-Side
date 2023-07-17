@@ -1,4 +1,8 @@
 ﻿using HairBook_Server_Side.Models.DAL;
+using System.Data.SqlClient;
+using Twilio.Http;
+using Twilio.TwiML.Messaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HairBook_Server_Side.Models
 {
@@ -26,7 +30,25 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertHairColor(colorNum,colorName,hairSalonId);
         }
 
-        public Object ReadAllHairSalon()
+        public int UpdateHairColor(int colorNum, bool isActive, int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.UpdateHairColor(colorNum, isActive, hairSalonId);
+        }
+
+        public int InsertHairSalonImages(string image, int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.InsertHairSalonImages(image,hairSalonId);
+        }
+
+        public List<string> ReadHairSalonImages(int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadHairSalonImages(hairSalonId);
+        }
+
+        public Object ReadAllHairSalons()
         {
             DBServices dbs = new DBServices();
             return dbs.ReadAllHairSalon();
@@ -50,7 +72,7 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadHairSalonInfo(hairSalonId);
         }
 
-        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, string day)
+        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, int day)
         {
             DBServices dbs = new DBServices();
             return dbs.InsertHairSalonWorkTime(hairSalonId, fromHour, toHour, day);

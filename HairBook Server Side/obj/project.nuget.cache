@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "pDYYIeiE9i5RzwGAPunmDDz3+ze7yXnp6/8fhOxejJqXDYefqg3Z13F9vham4iWObot0O9J1zAaatfgW0NlBYg==",
+  "dgSpecHash": "QLyaz1nqnc3g27i6rax1S94Sjtfwr+EPF1OLIqj+Xep4p1ht1XhAGKsSYcmKItrxRUlWFKG+KgdmQuMzQ5RdIg==",
   "success": true,
   "projectFilePath": "C:\\Users\\dorha\\OneDrive\\מסמכים\\GitHub\\HairBook-Server-Side\\HairBook Server Side\\HairBook Server Side.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\dorha\\.nuget\\packages\\expo.server.sdk\\1.0.2\\expo.server.sdk.1.0.2.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
@@ -23,7 +24,7 @@
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
-    "C:\\Users\\dorha\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\dorha\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.7.0\\runtime.native.system.data.sqlclient.sni.4.7.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\dorha\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",

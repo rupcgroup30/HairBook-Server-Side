@@ -48,10 +48,22 @@ namespace HairBook_Server_Side.Models
             return dbs.UpdateNOrdetProduct(id, phoneNum,amount,date, hairSalonId);
         }
 
-        public int UpdateProduct(int id, int amount,float price,int hairSalonId)
+        public int UpdateProduct(int id, int amount,float price, bool isActive,int hairSalonId)
         {
             DBServices dbs = new DBServices();
-            return dbs.UpdateProduct(id, amount,price, hairSalonId);
+            return dbs.UpdateProduct(id, amount,price,isActive, hairSalonId);
+        }
+
+        public Object ReadOrderedProdByClient(int hairSalonId, string phoneNum, int flag)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.ReadOrderedProdByClient( hairSalonId,phoneNum,flag);
+        }
+
+        public List<Object> GetTommorowProductsOrders(int hairSalonId)
+        {
+            DBServices dbs = new DBServices();
+            return dbs.GetTommorowProductsOrders(hairSalonId);
         }
     }
 }

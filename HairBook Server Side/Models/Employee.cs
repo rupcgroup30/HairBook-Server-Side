@@ -48,6 +48,17 @@ namespace HairBook_Server_Side.Models
             return dbs.UpdateEmployee(phoneNum, password, type, isActive, hairSalonId);
         }
 
+        public int SetEmpSpecialize(int hairSalonId, string phoneNum, List<string> numOfCare)
+        {
+            int sum=0;
+            DBServices dbs = new DBServices();
+            foreach (string i in numOfCare)
+            {
+                sum+= dbs.SetEmpSpecialize(hairSalonId, phoneNum, Convert.ToInt32(i));
+            }
+            return sum;
+        }
+
         public int UpdateEmployeeRank(double rank, int employeeNum)
         {
             DBServices dbs = new DBServices();

@@ -54,3 +54,4 @@ C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\appsettings.json
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\HairBook Server Side.deps.json
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\publish\HairBook Server Side.runtimeconfig.json
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Debug\net6.0\Expo.Server.SDK.dll

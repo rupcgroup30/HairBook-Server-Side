@@ -49,3 +49,4 @@ C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Release\net6.0\Microsoft.Extensions.Primitives.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Release\net6.0\Twilio.AspNet.Common.dll
 C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Release\net6.0\Twilio.AspNet.Core.dll
+C:\Users\dorha\OneDrive\מסמכים\GitHub\HairBook-Server-Side\HairBook Server Side\bin\Release\net6.0\Expo.Server.SDK.dll

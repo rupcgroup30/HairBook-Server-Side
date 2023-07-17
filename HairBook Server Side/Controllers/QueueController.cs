@@ -28,7 +28,7 @@ namespace HairBook_Server_Side.Controllers
 
         // GET: api/<QueueController>
         [HttpGet("GetAvailableTimes")]
-        public List<TimeSpan> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date, int hairSalonId)
+        public List<string> GetAvailableTimes(int serviceNum,string phoneNum, DateTime Date, int hairSalonId)
         {
             Queue queue= new Queue();
             return queue.ReadAvailableTimes(serviceNum, phoneNum, Date, hairSalonId);
@@ -43,7 +43,7 @@ namespace HairBook_Server_Side.Controllers
         }
 
         [HttpGet("/createTender/{hairSalonId}")]
-        public Object createTender(int hairSalonId)
+        public List<Object> createTender(int hairSalonId)
         {
             Queue queue = new Queue();
             return queue.createTender(hairSalonId);
@@ -52,7 +52,7 @@ namespace HairBook_Server_Side.Controllers
 
         // GET api/<QueueController>/5
         [HttpGet("/TommorowQueueReminder")]
-        public List<string> QueueReminder(int hairSalonId)
+        public List<Object> QueueReminder(int hairSalonId)
         {
             Queue queue = new Queue();
             return queue.QueueReminder(hairSalonId);
@@ -61,9 +61,9 @@ namespace HairBook_Server_Side.Controllers
 
         // POST api/<QueueController>
         [HttpPost("OrderQueue")]
-        public int OrderQueue([FromBody] Queue queue,int hairSalonId)
+        public int OrderQueue([FromBody] Queue queue,int hairSalonId,int flag)
         {
-            return queue.OrderQueue(hairSalonId);
+            return queue.OrderQueue(hairSalonId,flag);
         }
 
         [HttpPost("/PostIntoWaiting")]
@@ -74,9 +74,9 @@ namespace HairBook_Server_Side.Controllers
 
         // POST api/<QueueController>
         [HttpPost("MoveQueue")]
-        public Object MoveQueue([FromBody] Queue queue, int hairSalonId)
+        public Object MoveQueue([FromBody] Queue queue, int hairSalonId,int flag)
         {
-            return queue.MoveQueue(hairSalonId);
+            return queue.MoveQueue(hairSalonId,flag);
         }
 
         //// PUT api/<QueueController>/5
@@ -87,10 +87,10 @@ namespace HairBook_Server_Side.Controllers
 
         // DELETE api/<QueueController>/5
         [HttpDelete("DeleteQueue")]
-        public Object DeleteQueue(int queueNum,int hairSalonId)
+        public Object DeleteQueue(int queueNum,int hairSalonId,int flag)
         {
             Queue queue = new Queue();
-            return queue.DeleteQueue(queueNum, hairSalonId);
+            return queue.DeleteQueue(queueNum, hairSalonId,flag);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HairBook_Server_Side.Models;
+ 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +19,10 @@ namespace HairBook_Server_Side.Controllers
         }
 
         [HttpGet("GetAllHairSalons")]
-        public Object ReadAllHairSalon()
+        public Object GetAllHairSalon()
         {
             HairSalon hairSalon = new HairSalon();
-            return hairSalon.ReadAllHairSalon();
+            return hairSalon.ReadAllHairSalons();
         }
 
         // GET api/<HairColorController>/5
@@ -42,11 +43,28 @@ namespace HairBook_Server_Side.Controllers
             }
         }
 
+        [HttpGet("GetHairSalonImages")]
+        public List<string> GetHairSalonImages(int hairSalonId)
+        {
+            HairSalon hairSalon = new HairSalon();
+            return hairSalon.ReadHairSalonImages(hairSalonId);
+        }
+
+
         // POST api/<HairColorController>
         [HttpPost("PostSalonInfo")]
         public int PostSalonInfo(int hairSalonId, HairSalon hairSalonInfo)
         {
             return hairSalonInfo.InsertHairSalonInfo(hairSalonId, hairSalonInfo);
+        }
+
+
+        // POST api/<HairColorController>
+        [HttpPost("PostSalonMessage")]
+        public void PostSalonMessage(int hairSalonId, string subject,string message)
+        {
+            PushNotification ps = new PushNotification();
+            ps.SendMessagePNAsync(hairSalonId, subject, message);
         }
 
         // POST api/<HairColorController>
@@ -67,19 +85,29 @@ namespace HairBook_Server_Side.Controllers
 
         // POST api/<HairColorController>
         [HttpPost("PostWorkTime")]
-        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, string day)
+        public int InsertHairSalonWorkTime(int hairSalonId, string fromHour, string toHour, int day)
         {
             HairSalon hairSalon = new HairSalon();
             return hairSalon.InsertHairSalonWorkTime(hairSalonId, fromHour, toHour, day);
         }
 
+        // POST api/<HairColorController>
+        [HttpPost("PostHairSalonImages")]
+        public int PostHairSalonImages(string image, int hairSalonId)
+        {
+            HairSalon hairSalon = new HairSalon();
+            return hairSalon.InsertHairSalonImages(image,hairSalonId);
+        }
 
 
-        //// PUT api/<HairColorController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+
+        // PUT api/<HairColorController>/5
+        [HttpPut("UpdateHairColor")]
+        public int UpdateHairColor(int colorNum, bool isActive, int hairSalonId)
+        {
+            HairSalon hairColor = new HairSalon();
+            return hairColor.UpdateHairColor(colorNum, isActive, hairSalonId);
+        }
 
         //// DELETE api/<HairColorController>/5
         //[HttpDelete("{id}")]

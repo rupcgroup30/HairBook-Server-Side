@@ -10,6 +10,7 @@ namespace HairBook_Server_Side.Models
         private string empPhone;
         private string clientphone;
         private int serviceNum;
+        private string token;
 
         public DateTime Date { get => date; set => date = value; }
         public string Time { get => time; set => time = value; }
@@ -17,6 +18,7 @@ namespace HairBook_Server_Side.Models
         public string Clientphone { get => clientphone; set => clientphone = value; }
         public int ServiceNum { get => serviceNum; set => serviceNum = value; }
         public int QueueNum { get => queueNum; set => queueNum = value; }
+        public string Token { get => token; set => token = value; }
 
         public Object GetQueuesByClient(int hairSalonId, string phoneNum,int flag)
         {
@@ -36,23 +38,23 @@ namespace HairBook_Server_Side.Models
             return dbs.InsertToWaitingList(this, hairSalonId);
         }
 
-        public List<TimeSpan> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date,int hairSalonId)
+        public List<string> ReadAvailableTimes(int serviceNum, string phoneNum, DateTime Date,int hairSalonId)
         {
             DBServices dbs = new DBServices();
             return dbs.ReadAvailableTimes(serviceNum, phoneNum, Date, hairSalonId);
         }
 
-        public int OrderQueue(int hairSalonId)
+        public int OrderQueue(int hairSalonId,int flag)
         {
             DBServices dbs = new DBServices();
-            return dbs.OrderQueue(this, hairSalonId);
+            return dbs.OrderQueue(this, hairSalonId,flag);
         }
-        public Object MoveQueue(int hairSalonId)
+        public Object MoveQueue(int hairSalonId,int flag)
         {
             DBServices dbs = new DBServices();
-            int res= dbs.OrderQueue(this, hairSalonId);
+            int res= dbs.OrderQueue(this, hairSalonId,1);
             if (res !=0)
-                return dbs.DeleteQueue(this.QueueNum, hairSalonId);
+                return dbs.DeleteQueue(this.QueueNum, hairSalonId,flag);
             else
                 return 0;
         }
@@ -63,24 +65,24 @@ namespace HairBook_Server_Side.Models
             return dbs.ReadPhonesToRemind(hairSalonId);
         }
 
-        public List<string> QueueReminder(int hairSalonId)
+        public List<Object> QueueReminder(int hairSalonId)
         {
             DBServices dbs = new DBServices();
             return dbs.QueueReminder(hairSalonId);
         }
 
 
-        public Object createTender(int hairSalonId)
+        public List<Object> createTender(int hairSalonId)
         {
             DBServices dbs = new DBServices();
             return dbs.GetTodayWaiting(hairSalonId);
            // return dbs.createTender(waiting);
         }
 
-        public Object DeleteQueue(int queueNum,int hairSalonId)
+        public Object DeleteQueue(int queueNum,int hairSalonId,int flag)
         {
             DBServices dbs = new DBServices();
-            return dbs.DeleteQueue(queueNum, hairSalonId);
+            return dbs.DeleteQueue(queueNum, hairSalonId,flag);
         }
 
         

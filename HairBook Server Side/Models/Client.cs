@@ -4,11 +4,14 @@ namespace HairBook_Server_Side.Models
 {
     public class Client : User
     {
-
+        private int hairSalonId;
         private DateTime birthDate;
         private string gender;
+        private string token;
         public DateTime BirthDate { get => birthDate; set => birthDate = value; }
         public string Gender { get => gender; set => gender = value; }
+        public string Token { get => token; set => token = value; }
+        public int HairSalonId { get => hairSalonId; set => hairSalonId = value; }
 
         public int Insert(int hairSalonId)
         {
